@@ -1144,7 +1144,7 @@ async function main() {
        补图时用哪个取决于出图通道的原生格式（免 key 通道回 jpg），
        强行统一成 png 只会逼人多做一次无意义的格式转换，
        而转码会掉质量。图在哪、叫什么，由数据源登记为准。 */
-    ok(imgs.every(im => /^examples\/A1-\d+\.(png|jpg|jpeg|webp|avif)$/i.test(im.getAttribute("src") || "")),
+    ok(imgs.every(im => /^examples\/(A\d+|G\d*)-\d+\.(png|jpg|jpeg|webp|avif)$/i.test(im.getAttribute("src") || "")),
       "图片路径全部为 examples/<旧id>.<png|jpg|webp>（旧 id 永久可解析）");
     ok(imgs.every(im => (im.getAttribute("alt") || "").length > 0), "图片都有无障碍描述");
     const gpts = [...grid().querySelectorAll("[data-gal-gpt]")];

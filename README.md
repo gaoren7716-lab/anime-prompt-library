@@ -37,7 +37,7 @@
 <!-- GALLERY-EMBED:START -->
 ## 示例画廊 · 提示词与成品对照
 
-共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **13 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 37 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
+共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **14 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 36 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
 
 <table>
 <tr>
@@ -274,15 +274,30 @@ High-contrast neon night anime illustration with photographic camera feel: a cou
 </details>
 
 </td>
-<td></td>
+<td valign="top" width="50%">
+
+<img src="examples/A2-01.png" width="430" alt="A2-01" />
+
+**A2-01 · 70 年代复古机器人动画**（Retro 70s Mecha Anime）
+
+看点：看点：仰视角把敦实方正的机体顶天立地撑满画面，蓝白装甲配红色胸甲的渐变上色，背景火山喷发加放射状速度线，整图蒙一层低饱和做旧颗粒——70 年代海报感靠「有限」堆出来。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Retro 1970s super-robot anime still: a chunky chest-heavy robot with a horned helmet standing against clear sky over a volcanic island. Reproduce the production reality of the period honestly, limited animation staging, flat hand-painted poster-like skies built from broad washes, heavy uniform ink outlines and simplified primary color plating broken by visible panel gaps rather than engraved surface detail. Add coarse 16mm film grain, faint gate weave, and highlights faded warm toward red as old prints do. Compose a heroic low-angle full-body shot with thick black speed lines raking past. Keep it mechanical and hand-made rather than cleanly rendered. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
 </tr>
 </table>
 
-<details><summary>📝 已登记提示词、待配图的条目（37 条）</summary>
+<details><summary>📝 已登记提示词、待配图的条目（36 条）</summary>
 
 | 条目 | 名称 | 验证点（配图时必须演示） |
 | --- | --- | --- |
-| A2-01 | 70 年代复古机器人动画 | 色偏橘红、纸质感颗粒，机器人敦实方正、作画帧数少的有限动画感——70 年代的「穷」要成为风格本身。 |
 | A2-02 | 80 年代黄金赛璐璐 | 水粉厚涂背景有真实空气纵深，角色是强对比赛璐璐两层色，整图带胶片颗粒——手绘背景与赛璐璐角色的叠合。 |
 | A2-04 | 00 年代过渡期数码 | 人物仍是赛璐璐分层，但出现泛光与三维辅助背景/机甲，饱和度偏高——手绘与数码混血的过渡特征。 |
 | A2-05 | 10 年代高清电视动画 | 线条极锐利、明度高，阴影分两层而不是一层——「看起来像新番」的制式感。 |
