@@ -37,7 +37,7 @@
 <!-- GALLERY-EMBED:START -->
 ## 示例画廊 · 提示词与成品对照
 
-共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **15 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 35 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
+共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **16 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 34 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
 
 <table>
 <tr>
@@ -310,15 +310,30 @@ Golden-age 1980s anime cel animation still: a young heroine leaning on a balcony
 </details>
 
 </td>
-<td></td>
+<td valign="top" width="50%">
+
+<img src="examples/A2-04.png" width="430" alt="A2-04" />
+
+**A2-04 · 00 年代过渡期数码**（Early 2000s Digital）
+
+看点：看点：军装少年侧身立于战舰甲板，发丝与金属炮塔的高光带着数码后期 bloom 的油光，阴云天空是干净的渐变渲染——00 年代「胶片感退场、锐利登场」的过渡质感。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Early 2000s transitional anime still: a hero standing on the deck of a partly computer-generated battleship beneath an overcast sky. Mix the two technologies exactly as studios did then, character rendered with suspiciously uniform digital lineart and flat cel shading, matte-painted background carrying hybrid atmospheric effects, and a three-dimensional vehicle whose surface shading and lack of line quality read as visibly foreign next to the hand-drawn figure. Add the era's signature soft glow bloom across every highlight and mild edge aliasing where layers were composited. Compose as a 4:3 episode frame with restrained camera movement. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
 </tr>
 </table>
 
-<details><summary>📝 已登记提示词、待配图的条目（35 条）</summary>
+<details><summary>📝 已登记提示词、待配图的条目（34 条）</summary>
 
 | 条目 | 名称 | 验证点（配图时必须演示） |
 | --- | --- | --- |
-| A2-04 | 00 年代过渡期数码 | 人物仍是赛璐璐分层，但出现泛光与三维辅助背景/机甲，饱和度偏高——手绘与数码混血的过渡特征。 |
 | A2-05 | 10 年代高清电视动画 | 线条极锐利、明度高，阴影分两层而不是一层——「看起来像新番」的制式感。 |
 | A2-07 | 录像带 VHS 噪波 | 磁迹失真、色度溢出、扫描线、底部噪声带——介质损伤是画面语言，不是滤镜贴纸。 |
 | A3-14 | Studio Colorido（3D 融合） | 3D 背景透视精确、光源全场统一，2D 人物带轻微 CG 照明过渡——两个维度的接缝要几乎看不见。 |
