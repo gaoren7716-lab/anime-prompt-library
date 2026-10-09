@@ -21,6 +21,252 @@
 
 也就是说：有的直接复制，没有的组合出来，组合之外还能再变形，生成空间不再受限于已收录的数据。
 
+<!-- GALLERY-EMBED:START -->
+## 示例画廊 · 提示词与成品对照
+
+以下 **13 张**全部为 R0 条目（授权层允许自由商用的内容），每张图由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果。可交互的完整画廊在 `index.html`。
+
+<table>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-01.png" width="430" alt="A1-01" />
+
+**A1-01 · 赛璐璐平涂**（Cel Shading）
+
+看点：看点：暗部只有一层、边界锐利无渐变，背景压成纯色块——hard shadow 与 flat color 的教科书验证。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Classic Japanese cel-shaded anime illustration: a teenage girl in a navy sailor uniform standing in an empty classroom filled with afternoon sunlight. Shade her strictly with the traditional two-tone cel method, one flat base tone for every lit surface succeeded by a single crisp second shadow whose boundary stays razor sharp with no gradient anywhere between them. Surround every form with even-weight dark brown lineart and reduce background desks and window frames to large flat unmodulated color blocks. Restrict the scheme to warm skin, deep navy uniform cloth, muted chalkboard green and pale sunlit wood. Compose a waist-up portrait under flat even lighting free of rim light, bloom or photographic artifacts. Keep the frame clean with no text, logos, watermarks or UI elements.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A1-02.jpg" width="430" alt="A1-02" />
+
+**A1-02 · 现代数码柔光**（Modern Digital Soft Shading）
+
+看点：看点：光从窗口斜射进来，亮部过渡是连续渐变而不是分层色块，阴影里仍有通透感——这正是「数码柔光」与赛璐璐平涂的分界。右下角有通道水印，商用须裁掉。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Contemporary digital anime illustration finished with soft airbrush shading: a young woman with long silver hair and glossy eyes seated by a window at golden hour. Build the rendering from many layered gradients instead of hard cel boundaries, blending every transition until it disappears, and layer broad blurred highlight rings through the hair along with a translucent glow across the cheekbones. Give the irises several overlapping highlight discs and a soft bounce light along the lower lid. Soften the background into natural bokeh with slow drifting dust particles for commercial polish. Compose a chest-up portrait lit warmly and gently. Include no text, logos, watermarks or signature anywhere in the image.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-03.png" width="430" alt="A1-03" />
+
+**A1-03 · 厚涂 / 油绘感**（Thick Paint / Painterly）
+
+看点：看点：笔触有物理厚度、刀刮的脊线在火光下起边，暗部是暖棕底层而非纯黑——厚涂与 CG 渲染的分界就在这里。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Painterly anime illustration executed in thick impasto oil technique: a battered knight seated beside a dying campfire at dusk. Apply pigment in visible directional strokes rather than smooth fills so that ridges of paint physically catch the firelight along armor bevels, and construct every shadow from dense warm brown underlayers. Maintain an old-master value structure with deep integrated shadow masses and one dominant warm key light blooming off the front plate. Let edges stay broken and searching rather than slick, with coarse canvas tooth faintly visible through the dark background. Compose a three-quarter view with focus falling off sharply into the trees behind. Include no text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A1-04.png" width="430" alt="A1-04" />
+
+**A1-04 · 透明水彩**（Transparent Watercolor）
+
+看点：看点：最亮处就是纸本身的白，颜色在湿纸上自然洇开、边缘留水痕——透明水彩区别于不透明水粉的核心证据。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Transparent watercolor anime illustration: a girl in a straw hat walking along a puddled seaside path just after rain. Use nothing but transparent washes, allowing the white of the paper itself to serve as the brightest highlight and building every tone by layering diluted pigment so colors mix optically on the sheet instead of being premixed on a palette. Let wet-on-wet blooms soften the horizon line and pool unevenly at the hem of the skirt while granulation settles quietly into the shadows. Keep a light graphite under-drawing visible beneath the wash. Leave generous untouched paper around the figure and add no border or frame. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-05.png" width="430" alt="A1-05" />
+
+**A1-05 · 粗描线稿 / 线稿至上**（Bold Lineart Focus）
+
+看点：看点：纯黑白、近处线条粗黑厚重而远处迅速收细，几乎不用灰调——线重变化是手绘感的第一来源。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Bold lineart-driven anime illustration with almost no applied color: a swordsman caught mid-draw in one explosive moment. Make the drawing itself the subject by varying line weight decisively, loading heavy black strokes onto the forms closest to the viewer and thinning them as shapes recede, and leaving deliberate open gaps and slight overshoot where a hand would naturally break the contour. Add rough searching pencil strokes in a few places and one passing of light hatching in the deepest shadows only, plus a single flat gray tone as spot accent. Stage it diagonally against a nearly empty background. Include no text, speech bubbles, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A1-07.png" width="430" alt="A1-07" />
+
+**A1-07 · Q 版 / 二头身**（Chibi / Super Deformed）
+
+看点：看点：二头身、贴纸式白边、大面积粉彩——Q 版的比例逻辑与正常头身完全不同。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Chibi super-deformed anime character design: a cheerful cat-eared girl holding an ice cream cone taller than her own body. Compress the proportions to roughly two head-lengths in total with an enormous rounded head, small stubby limbs and simplified mitten hands, keeping the eyes huge, sparkling and set low on the face beside a small bright mouth. Render everything with simple clean shapes, minimal shading and bright saturated toy-like colors so the silhouette reads instantly even at icon size. Center her against a plain pastel circle on open ground with no additional props. Include no background clutter, no text, logos, watermarks or UI frames.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-08.png" width="430" alt="A1-08" />
+
+**A1-08 · 黑白漫画页**（Monochrome Manga）
+
+看点：看点：三格分镜、网点纸灰阶、集中线、下三分之一整幅出血——对白框留空，文字一律后期排版。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Black-and-white manga page layout: three stacked rectangular panels narrating one wordless beat of a rooftop confrontation. Execute entirely in ink using solid black fills, precise cross-hatching, blown highlight shapes and mechanical screentone gradients for mid-values, with converging speed lines driving the eye toward the action. Separate the panels with clean black borders and generous gutters, and open one full-bleed borderless splash moment across the lower third. Keep composition readable from top to bottom and rely on silhouette separation so black masses never muddy into one another. Leave any speech balloons empty. Include no dialogue, logos, watermarks or color.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A1-09.png" width="430" alt="A1-09" />
+
+**A1-09 · 水墨 / 墨绘**（Sumi-e / Ink Wash）
+
+看点：看点：鹤与苇一笔成形、远岸洇成淡灰，大片留白当作水与雾——负空间是水墨语言，不是没画完。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Sumi-e ink wash painting: a lone crane standing in shallow water beside wind-bent reeds. Work almost entirely in black ink modulated only by water, drawing the reed stems and crane legs as unhesitating single strokes that taper from loaded bristle to dry tip, and washing the far bank into soft gray bleed. Allow absorbent rice paper to drink the pigment so every edge feathers naturally, and leave vast regions of untouched white standing in for mist and open water so that negative space carries nearly a third of the composition. Place one small red seal square in a corner. No modern text, logos or photographic effects.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-10.png" width="430" alt="A1-10" />
+
+**A1-10 · 浮世绘 / 木版画**（Ukiyo-e Woodblock）
+
+看点：看点：粗轮廓线勾边、色块平涂、天空横向渐层、和纸纤维透出——木版画的工艺痕迹要留在画面里。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Ukiyo-e woodblock print: a lone fisherman standing on a rocky outcrop at dawn, with a calm bay and distant hills behind him. Confine yourself to flat blocks of hand-mixed mineral color, indigo, soft vegetable yellow and muted red, each bounded by a confident black key line with no modeling or soft edges anywhere in the image. Let the fibrous tooth of washi paper show through the ink, add faint horizontal bokashi banding across the sky, and admit slight misregistration where a second block landed off its mark. Compose with a dominant diagonal, heavy asymmetry and an empty horizontal band at the horizon. Include one small empty cartouche. No readable characters, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A1-11.png" width="430" alt="A1-11" />
+
+**A1-11 · 像素画**（Pixel Art）
+
+看点：看点：像素格子清晰、色板受限、抖动过渡，缩到图标大小仍认得出剪影——16-bit 不是「模糊的小图」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Pixel art game sprite scene: a small armored hero standing in a torchlit cave, rendered at true one-to-one pixel resolution. Restrict the palette to roughly sixteen deliberate colors with no anti-aliasing blended between them, and place every individual pixel by hand, using ordered dithering to grade the torch light falloff across the cavern walls and cluster dithering for ambient shadow. Give the sprite a dark outline, exactly three shades of value per material, and a silhouette that stays readable at thumbnail size. Keep all elements aligned to one consistent pixel grid. Add no blurring, no filters, no text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-12.png" width="430" alt="A1-12" />
+
+**A1-12 · 剪影 / 负空间**（Silhouette & Negative Space）
+
+看点：看点：主体几乎全黑、只留一线轮廓光，人占画面极小而空处极大——负空间是被主动经营的构图。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Silhouette and negative-space anime composition: a girl standing alone on a rain-slicked city crossing at night, rendered almost entirely as a black shape. Backlight her with warm shopfront glow that picks out only a thin rim of hair and shoulder while every interior detail dissolves, and let the surrounding space carry the information through smeared pavement reflections, drifting rain streaks and distant lit windows. Limit the scheme to deep blue-black plus a single accent color. Compose so the figure occupies a small part of a very large empty frame, honoring the negative space intentionally. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A1-13.png" width="430" alt="A1-13" />
+
+**A1-13 · 手绘草稿质感**（Pencil Sketch / Draft）
+
+看点：看点：颅骨圆、中心线、胸腔块面都留在纸上，肩线有重复描摹的搜索痕迹，下半身未画完——过程感就是内容。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Pencil sketch anime drawing left deliberately in draft state: a seated girl resting her chin on one hand, drawn on toned paper. Keep the construction legible, a light circle for the cranium, a center line, a blocked chest cage, and duplicated searching contour lines where the hand corrected the near shoulder. Vary graphite pressure so weight gathers on the underside of forms, smudge a few core shadows with a blending stump, and abandon the far arm and lower sheet unfinished as raw white paper. Add faint kneaded-eraser highlights lifted from the hair. Include no color, no inked lines, no text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A1-14.png" width="430" alt="A1-14" />
+
+**A1-14 · 高对比霓虹 / 夜景摄影感**（Neon Night / Cyber Palette）
+
+看点：看点：品红与青分别从两侧打光、湿地反光被拉成竖向光带，暗部压向纯黑——霓虹夜景靠光源颜色说话，不靠滤镜。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+High-contrast neon night anime illustration with photographic camera feel: a courier standing at the mouth of a rain-soaked alley in a dense city. Light the scene almost entirely from practical signage, magenta from one wall and cyan from the other, rimming her shoulders and catching the eyelashes, with almost no ambient fill so shadow areas crush toward black. Make every wet surface a broken mirror holding smeared colored reflections, and add gentle lens bloom with slight chromatic fringing toward the frame edges. Compose with strong perspective convergence and heavy atmospheric depth. Put no readable text on the signs, no logos, watermarks or UI overlays.
+```
+
+</details>
+
+</td>
+<td></td>
+</tr>
+</table>
+
+<!-- GALLERY-EMBED:END -->
+
 ## ⚠️ 商用前必读：授权边界
 
 **本库的代码、结构设计、以及 324 条 GPT 出图正文是原创的，可以商用。**
