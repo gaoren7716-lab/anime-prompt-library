@@ -15,8 +15,14 @@
 
 | 条目 id | 中文名 | 英文名 | 图片命名 |
 | --- | --- | --- | --- |
-| A2-05 | 10 年代高清电视动画 | 2010s Modern TV Anime | `examples/A2-05.png` |
+| A2-05 | 10 年代高清电视动画 | 2010s Modern TV Anime | `examples/A2-05.png`（图已在位，IP 相似性待定） |
 | A2-07 | 录像带 VHS 噪波 | VHS / Analog Tape | `examples/A2-07.png` |
+
+## 工作室段 A3（1 条待补）
+
+| 条目 id | 中文名 | 英文名 | 图片命名 |
+| --- | --- | --- | --- |
+| A3-14 | Studio Colorido（3D 融合） | Studio Colorido | `examples/A3-14.png` |
 
 ## 地区风格段 A4（7 条待补）
 
