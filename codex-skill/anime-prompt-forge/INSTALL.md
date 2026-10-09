@@ -1,5 +1,19 @@
 # anime-prompt-forge · 安装与验证
 
+## 网页入口在哪
+
+**技能包里没有 `index.html` —— 这是刻意的。** 技能包只是命令行；
+网页版在仓库根目录，两个入口二选一：
+
+- **在线版（什么都不用装）**：<https://gaoren7716-lab.github.io/anime-prompt-library/>
+- **本地网页**：克隆**整个仓库**（不是只复制技能包），直接打开根目录的 `index.html`
+
+```bash
+git clone https://github.com/gaoren7716-lab/anime-prompt-library.git
+```
+
+如果装完技能包后找不到 index.html，要么去上面的在线地址，要么按下面命令克隆整个仓库。
+
 ## 装到 Codex
 
 ```bash

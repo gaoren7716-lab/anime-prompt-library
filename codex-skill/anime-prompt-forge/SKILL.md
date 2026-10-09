@@ -187,7 +187,9 @@ node scripts/forge.js diagnose --style ST-001
 
 ## 在 Codex 里用：与网页端的差别
 
-同一套库有两个入口 —— 仓库里的网页（`index.html`）和这个命令行。
+同一套库有两个入口 —— 网页和这个命令行。
+网页版**不在技能包里**：在线地址 <https://gaoren7716-lab.github.io/anime-prompt-library/>，
+或克隆整个仓库后打开根目录的 `index.html`。
 在 Codex 里只有命令行，所以下面这些是**必须换做法**的地方：
 
 **一、长文本不要读进对话。** 四步齐备的正文有 1500–2500 字符，
