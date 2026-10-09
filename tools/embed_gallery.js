@@ -21,22 +21,32 @@ const core = require(A("data-core.js"));
 const coreM = require(A("data-core-more.js"));
 const STYLES = core.STYLES.concat(coreM.STYLES_MORE);
 
-/* 英文正文分散在 st1/st2/st3 等文件，按文件名模式全部收齐 */
+/* 英文正文分散在 st（画风）/ gn gk（题材）等所有 data-prompts-*.js 里，
+   按文件名模式全部收齐——只收 st 会漏掉题材/年代等段的正文 */
 const gpt = {};
-fs.readdirSync(A(".")).filter(f => /^data-prompts-st\d*\.js$/.test(f)).forEach(f => {
+fs.readdirSync(A(".")).filter(f => /^data-prompts-[a-z]+\d*\.js$/.test(f)).forEach(f => {
   const m = require(A(f));
   const arr = m.PROMPTS || m.PROMPTS_ST || Object.values(m).find(Array.isArray);
   (arr || []).forEach(p => { if (p && p.id && p.gpt) gpt[p.id] = p.gpt; });
 });
 
 let missing = 0;
+/* 条目名从全量数据源查（题材/年代/工作室等不在 STYLES 里，只查 STYLES 会让 G 条目全挂） */
+const ALL_ENT = {};
+["data-core.js", "data-core-more.js", "data-genres.js", "data-layout.js", "data-palette.js"].forEach(f => {
+  try {
+    const d = require(A(f));
+    Object.keys(d).forEach(k => { if (Array.isArray(d[k])) d[k].forEach(e => { if (e && e.id) ALL_ENT[e.id] = e; }); });
+  } catch (x) { /* 缺文件就退回 STYLES */ }
+});
+
 /* 已配图 / 待配图分流：README 的对照表只放真图；
    待配条目（img: null）单独列成折叠清单——提示词已就绪但没图，
    混进对照表会出现破图或假证据。 */
 const done = gallery.filter(e => e.img);
 const pending = gallery.filter(e => !e.img);
 const cell = (e) => {
-  const ent = STYLES.find(s => s.id === e.id);
+  const ent = ALL_ENT[e.id] || STYLES.find(s => s.id === e.id);
   const body = gpt[e.id];
   if (!ent || !body) { missing++; return ""; }
   const esc = s => String(s).replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\|/g, "\\|");
@@ -54,14 +64,7 @@ for (let i = 0; i < done.length; i += 2) {
   rows.push("<tr>\n" + cell(done[i]) + "\n" + (done[i + 1] ? cell(done[i + 1]) : "<td></td>") + "\n</tr>");
 }
 
-/* 待配条目清单：中文条目名从全量数据源查（题材/版式/配色不在 STYLES 里） */
-const ALL_ENT = {};
-["data-core.js", "data-core-more.js", "data-genres.js", "data-layout.js", "data-palette.js"].forEach(f => {
-  try {
-    const d = require(A(f));
-    Object.keys(d).forEach(k => { if (Array.isArray(d[k])) d[k].forEach(e => { if (e && e.id) ALL_ENT[e.id] = e; }); });
-  } catch (x) { /* 缺文件就让清单显示 id */ }
-});
+/* 待配条目清单：中文条目名复用上面的 ALL_ENT 全量查表 */
 
 const sec = [];
 sec.push("## 示例画廊 · 提示词与成品对照");

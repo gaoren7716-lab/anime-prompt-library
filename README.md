@@ -19,25 +19,10 @@
 | 从零创作 | **出图工作流** | 画风 → 题材 → 版式 → 配色四步选型，**五个模型各出一份按其语法优化的提示词** |
 | 还没想好 | **一键抽卡** | 随机抽一组组合，可直接出图 |
 
-每一步都**能搜到风格**：中文名、别名、跨语言、描述式搜索都认。
-每份结果都自带**效果说明**——四步各自决定什么、画风在你选的模型上叫不叫得动、
-恒定保留什么（禁项）、哪些话没经过实测。说得清变化，而不是只甩一段英文。
-
-本地使用：克隆后直接打开 `index.html`（与在线版同源）。
-不克隆仓库、只想快速上手见 [`docs/quick-start.md`](docs/quick-start.md)；
-在 Codex / WorkBuddy 等 Agent 里调用见 [`SKILL.md`](codex-skill/anime-prompt-forge/SKILL.md)；
-不确定从哪开始，先看 [`INDEX.md`](INDEX.md) —— 一页索引，告诉你每个问题该查哪张表。
-
-在此基础上还有一层**开放式知识库**：十二个库、**537 个节点**、九个组合槽位，外加检索 / 组合 / 变形三套引擎。它的目标是——
-
-> **已知内容可检索，未收录内容可拆解，新的创作需求可通过模块组合与受控变形构建。**
-
-也就是说：有的直接复制，没有的组合出来，组合之外还能再变形，生成空间不再受限于已收录的数据。
-
 <!-- GALLERY-EMBED:START -->
 ## 示例画廊 · 提示词与成品对照
 
-共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **16 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 34 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
+共 **49 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **46 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 3 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
 
 <table>
 <tr>
@@ -328,50 +313,574 @@ Early 2000s transitional anime still: a hero standing on the deck of a partly co
 
 </td>
 </tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A2-07.png" width="430" alt="A2-07" />
+
+**A2-07 · 录像带 VHS 噪波**（VHS / Analog Tape）
+
+看点：看点：整图压进一台显像管电视里——圆角暗角、横向扫描线、紫色色度溢出，画面底部一条磁迹噪波带把湿漉漉的夜路搅花，介质损伤本身就是画面语言。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+VHS analog tape capture aesthetic applied to an anime frame: an empty late-night city street seen through a worn consumer recording. Degrade it convincingly with heavy chroma bleed smearing color to the right of every bright edge, low-resolution luma softness, horizontal tracking distortion bands drifting across the lower third, occasional dropout flicker lines, and pronounced scanlining over the whole picture. Push the color toward bleeding magenta and crushed blacks with milky lifted shadows, then add faint curved CRT vignetting at the corners. Keep it authentically lo-fi rather than a clean modern digital filter. Include no readable text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A3-14.png" width="430" alt="A3-14" />
+
+**A3-14 · Studio Colorido（3D 融合）**（Studio Colorido）
+
+看点：看点：临海木廊上午餐的两个学生，远景小镇与海湾用柔和厚涂铺出空气纵深，逆光给发丝镶了一圈暖边——2D 线条与 3D 渲染融在同一片阳光里，明亮通透正是 Colorido 式的招牌。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Studio Colorido style anime still with integrated three-dimensional backgrounds: two students eating lunch on a wooden veranda above a sunlit town. Blend hand-drawn characters into dimensionally correct rendered environments, true camera volume and believable light falloff, soft indirect bounce off the floorboards onto the figures, and photographic depth of field separating them from a convincingly real town below. Keep the character rendering soft and warm, matching its highlight direction exactly to the rendered light so nothing floats. Compose the whole frame around warm everyday domestic tone and modest exposure. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A4-01.png" width="430" alt="A4-01" />
+
+**A4-01 · 国产二维动画风**（Chinese 2D Anime (Donghua)）
+
+看点：看点：仙侠人物立于云山之巅，长绸飘带用水墨晕染，山石皴法混着绢本设色与洒金——国产二维动画里「画水墨」的那一路，留白比填满更重要。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Chinese two-dimensional donghua illustration: a young cultivator standing on a floating cloud-sea peak with ribbon streamers trailing through the air. Combine the regional hallmarks, extremely fine calligraphic linework that tapers like brush writing, a cool celadon and vermilion scheme lifted by gold ink accents, costume built from layered silk with embroidered cloud-pattern trim, and scenery drawn from stylized Chinese landscape painting rather than photographic reference. Render drifting petals and released spiritual energy as ribbon-like strokes with meaningful negative space between them. Compose a vertical full-body key visual leaving generous open sky above. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A4-02.png" width="430" alt="A4-02" />
+
+**A4-02 · 国产三维动漫 CG**（Chinese 3D CG Donghua）
+
+看点：看点：铠甲角色与雷云巨兽对峙的 CG 电影感——次表面散射的皮肤、金属高光、体积雾与闪电，戏剧光比一拉满就是国产三维动画的游戏 CG 味。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Chinese three-dimensional CG donghua production frame: an armored cultivator facing a spirit beast atop a stone platform in storm light. Render it as high-end semi-realistic cinematic work, clean subsurface-scattered skin with visible pore detail, physically based fabric showing sheen on embroidered silk brocade, groomed hair with individual strand highlights catching the lightning, and heavy volumetric storm lighting with shafts through cloud. Keep the faces stylized toward anime ideals while the world around them stays photographic, and add layered particle dust and drifting mist elements. Compose an epic wide frame with the camera orbiting low and slow. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A4-07.png" width="430" alt="A4-07" />
+
+**A4-07 · 韩漫 / Webtoon 条漫**（Webtoon / Manhwa）
+
+看点：看点：雨夜斑马线上的职场女性，真人比例加精修发丝与质感刻画，霓虹散景铺满背景——韩漫封面式的高个写实系，与日系萌版一眼可分。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Korean webtoon and manhwa style vertical composition: a fashionable office worker crossing a lit crosswalk at night, built for phone scrolling. Apply the finish accurately, heavily airbrushed soft shading with almost no hard edge anywhere on the body, extremely detailed eyes rendered with dozens of highlight shapes and concentric iris rings, flawless skin with blushed cheeks and a defined cupid's bow, contemporary fashion drawn down to individual fabric textures, and background elements simplified or dissolved into gradient fog. Keep everything tall and centered so no important shape touches the side margins. Compose a full-body vertical. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A4-08.png" width="430" alt="A4-08" />
+
+**A4-08 · VTuber / 虚拟主播立绘**（VTuber Character Art）
+
+看点：看点：银发双马尾加头戴耳机话筒的半身立绘，渐变圆形背景、透明感高光与糖果配色——直播软件框里「看板娘」的标准规格。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+VTuber Live2D character key art: a brightly designed virtual streamer waving at the viewer in an open frontal pose. Build her for appeal at thumbnail size, a highly saturated coordinated scheme using two dominant hues plus white and one accent, layered accessories such as asymmetric hair ornaments, a headset, and clothing panels carrying subtle tech motifs, large expressive eyes with multiple sparkle highlights, and clean even linework free of rendering noise. Keep the gesture open and frontal so the silhouette reads immediately, and set her against a simple soft gradient or patterned circle. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A4-09.png" width="430" alt="A4-09" />
+
+**A4-09 · 动画截图感**（Anime Screencap Simulation）
+
+看点：看点：教室窗边的 4:3 画幅加暗角，角色按 TV 作画收线、背景教学楼按真实透视虚化——模拟的正是播放器里随手暂停的那一帧。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Anime screencap simulation: a quiet moment of a girl sliding open a classroom window, rendered as though lifted straight off a broadcast episode. Reproduce broadcast reality faithfully, correct television aspect rather than print proportions, very slight interlace grain, mild chroma softness typical of analog-to-digital transfer, and compression-friendly flat color decisions with no illustrative embellishment added by an artist. Keep the composition functional and unremarkable like a real cut, characters placed off-center, props clipped at the frame edges, and no hero lighting or rim light anywhere. Add faint corner darkening from old broadcast matting. Include no subtitles, logos, watermarks or UI.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A4-10.png" width="430" alt="A4-10" />
+
+**A4-10 · Vaporwave / 复古未来主义**（Vaporwave Retro-Futurism）
+
+看点：看点：粉青渐变天空、条纹落日、透视网格地面，大理石头像与断柱撒了一路——vaporwave 符号表全齐，一切都塑料般光滑。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Vaporwave retro-futurist illustration: a lone figure standing before an endless chrome grid receding toward an enormous pastel sun. Assemble the aesthetic deliberately from its parts, primitive wireframe computer graphics and low-polygon objects rendered with naive flat lighting, gradient skies running hot pink into soft teal, chrome extrusions mirroring that same gradient across their bevels, and scattered fragments of classical statuary standing in for scenery. Lay a hazy scanline atmosphere over the whole frame and keep a strict pastel script with no pure black. Compose symmetrically around one strong vanishing point. No readable text, logos, watermarks or UI.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A5-05.png" width="430" alt="A5-05" />
+
+**A5-05 · 欧式绘本水彩**（European Picture Book Watercolor）
+
+看点：看点：雪天运河边的骑车邮差，水彩在湿纸上晕开砖红与灰蓝，雪花留白靠纸面底色透出来——欧式绘本的「松散笔触 + 满纸生活气」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+European picture-book watercolor illustration: an elderly postman cycling past canal houses during first snow. Keep the handling loose and literate, dry-brush ink contours drawn with a worn nib so the line skips and scratches across the paper texture, watercolor pooled unevenly and allowed to run past the drawn edge in places, a restrained palette of slate blue and dusty rose, and bare paper showing through the majority of the surface. Give the figures whimsical slightly awkward proportions and let atmospheric perspective carry the storytelling. Leave a wide clean margin of untouched paper around the whole scene. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A5-06.png" width="430" alt="A5-06" />
+
+**A5-06 · 黏土定格动画**（Claymation / Stop Motion）
+
+看点：看点：黏土捏制的老发明家捧着蒸汽装置，指纹与刀痕留在黏土表面，棚灯打出一铸铁工作台的实物感——定格动画的魅力是「每个 imperfection 都是手做的证据」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Claymation stop-motion still: a lumpy clay inventor standing in his cluttered workshop holding a sputtering brass contraption. Make the material absolutely convincing, every surface covered in fingerprints, thumb dents and fingernail smoothing marks, faint seams where separately sculpted pieces were joined, and tiny dust motes clinging to the plasticine. Give the props slightly wrong proportions because a human hand built them quickly, and leave tell-tale imperfections such as chipped elbow edges and relief from the internal armature at the neck. Light it as a genuine miniature set with practical lamp bounce and very shallow depth of field. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A5-08.png" width="430" alt="A5-08" />
+
+**A5-08 · 有限动画现代主义**（UPA / Limited Animation Modernism）
+
+看点：看点：萨克斯手由三四个大色块拼成，帽檐、楼群、月亮全是几何剪影，米白纸底托住红蓝橙三色——「少画但每一笔都是设计」的 UPA 法则。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Modernist limited-animation still in the UPA tradition: a jazz musician leaning against a hydrant in a stylized city square. Honor the mid-century design revolt, figures reduced to graphic abstracted marks, bold flat areas of unmodeled color with no attempt at realistic shading, deliberate anatomical distortion in service of the line rather than the body, and a background laid out like a modernist poster with skewed off-kilter perspective and unexpected negative counter-forms. Add print-like ink texture and edges sitting very slightly off register. Compose strong asymmetric balance like a screenprint. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A5-09.png" width="430" alt="A5-09" />
+
+**A5-09 · 拼贴与混合媒介**（Collage & Mixed Media）
+
+看点：看点：人脸被撕碎的报纸、油彩与布纹拼贴重组，断口毛边与拼缝全部保留——混合媒介的魅力在「每一块纸来自不同的世界」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Collage and mixed-media animated still: a woman's portrait assembled entirely from torn paper, fabric swatches and cut photographic fragments. Exploit the physical layering, torn fiber edges catching light with real thickness, mismatched scale between pasted elements so the hand and face were clearly printed separately, visible glue sheen and buckling paper, and seams left deliberately unresolved where two source images meet. Let different regions flip between drawn line, printed halftone and flat painted block. Compose the figure frontally against a heavily worked textured ground. Keep it tactile and assembled, never digitally smooth. No readable text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A5-10.png" width="430" alt="A5-10" />
+
+**A5-10 · 孔版印刷质感**（Risograph Print Indie）
+
+看点：看点：橙蓝双色孔版印刷，套色边缘颗粒错位，向日葵和落日共用同一种橙——riso 的低保真限制感就是风格本身。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Risograph print style indie illustration: a cyclist riding past sunflowers beneath an enormous low sun. Restrict yourself to two spot colors, fluorescent orange and medium blue, printed as separate translucent layers so every overlap produces one predictable third color. Run the registration slightly off so one layer drifts a few millimetres across the sheet, and let the ink land as coarse halftone dot pattern with uneven coverage, occasional voids and soft mottling where the drum ran dry. Use matte absorbent paper with visible fiber. Compose flat and poster-like with no depth illusion. No readable text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A5-11.png" width="430" alt="A5-11" />
+
+**A5-11 · 童书绘本插画**（Picture Book Illustration）
+
+看点：看点：穿雨衣的小熊划船，蜡笔质感的水面反光与萤火虫点缀，暖黄落日对青绿树林——童书绘本的「安全感构图」，每个元素都圆润无害。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Children's picture-book illustration: a small bear in a yellow raincoat rowing a wooden boat across a pond at dusk. Draw for a young reader, soft rounded forms with no sharp corners anywhere in frame, friendly characters with large eyes and instantly legible expressions, gently wobbly hand-drawn outlines, and a warm storybook scheme anchored by ochre and soft teal. Keep the composition simple with one obvious focal point, and give the environment just enough hidden detail to reward repeated looking. Build the texture from crayon and colored pencil strokes over visible paper grain. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A5-12.png" width="430" alt="A5-12" />
+
+**A5-12 · 转描现实主义**（Rotoscoping）
+
+看点：看点：真人转描质感的拳台对攻，肌肉结构逐帧写实、汗水与围绳投影保留实拍感，手绘上色只铺色块——转描的辨识度在「动起来像真人，停下来像版画」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Rotoscoped animation still: a boxer throwing a hook, traced frame by frame over live-action reference footage. Sell the uncanny accuracy of traced motion, every joint following what a real body actually did, which produces slightly wrong drawn proportions and shifting line quality as the tracer corrected between frames, with inked outlines wobbling erratically over the recorded movement instead of holding a steady contour. Keep the shading flat and sparse. Keep the background drawn loosely and differently from the figures so life and illustration sit uneasily together. Use flat limited color and no digital smoothing anywhere. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/A5-13.png" width="430" alt="A5-13" />
+
+**A5-13 · 苏联 · 东欧手绘**（Soviet & Eastern European Hand-Drawn）
+
+看点：看点：雪夜森林里的狼，油画厚涂的冷蓝调里只留一窗暖光，松枝积雪用沉静的老动画笔触——庄严、缓慢、带着童话的孤独感。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Soviet and Eastern European hand-drawn animation still: a melancholy wolf walking through snow-heavy pine woods at blue twilight. Recreate the studio technique precisely, figures and scenery painted in gouache or oil directly on glass under the camera, producing soft smeared edges and a thick painterly surface, multiplane depth with separate foreground branches sliding past the animal, and Slavic folk ornament recurring inside the tree forms and drifted snow patterns. Hold the palette cold blue and umber broken only by one warm window glow far off. Compose a heavy wide shot with deep layered forest recession. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A5-14.png" width="430" alt="A5-14" />
+
+**A5-14 · 花窗玻璃与马赛克**（Stained Glass & Mosaic）
+
+看点：看点：哥特尖拱窗里的圣母像，铅条分割色块、每格玻璃一种渐变，光从背后点燃整幅画面——花窗的透光感是普通插画模拟不出来的。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Stained glass and mosaic animated still: a robed saint standing beneath a gothic rose window with light driving through it. Construct everything as leaded glass, every shape bounded by a heavy black lead line, infilled with flat translucent jewel color, the whole lit from behind so that light passes through the material rather than reflecting off its surface. Add irregular bubble striations and variation within each glass piece, gold leaf accents throwing stronger beams into the air, and mosaic tile work across the floor. Compose with hard vertical symmetry and keep nothing crossing outside the window arch. No readable text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-01.png" width="430" alt="G-01" />
+
+**G-01 · 热血战斗**（Battle Shonen）
+
+看点：看点：全力一拳砸碎地面的瞬间，橙红能量与蓝电缠在拳峰，碎石向四面八方炸开——少年战斗的「决定性一击」四件套：姿势、集中线、冲击帧、能量气场。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Battle shonen anime illustration: a teenage fighter launching forward through shattered concrete with energy crackling off his shoulders. Use the genre's full vocabulary, one extreme dynamic action pose with readable weight transfer and a single fully extended limb, radial debris implying the impact frame, hard ink speed lines converging on the point of contact, and layered aura effects in a hot secondary hue wrapping the silhouette. Keep the expression resolute rather than screaming. Compose from a low three-quarter angle so he feels larger than the frame, with the camera slightly rotated. Include no text, logos, watermarks or UI elements.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/G-03.png" width="430" alt="G-03" />
+
+**G-03 · 忍者 / 武士**（Ninja & Samurai）
+
+看点：看点：竹林光柱下的拔刀姿态，黑色羽织压低重心，视线与刀同向——武士题材靠「静中的紧绷」，环境越安静杀气越重。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Japanese historical action anime still: a swordsman in dark indigo hakama holding iaijutsu stance in a bamboo forest at dawn. Draw the period accurately, layered kosode and hakama with correct wrapped seams and tied obi, the blade held in a genuine ready position with a visible temper line along the edge, straw sandals, and a headband trailing on the morning wind. Let low shafts of sunlight cut through dense bamboo with dust suspended in every beam, and push the forest back into deep green recession. Compose a wide shot with the blade still sheathed so the tension stays unspent. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-07.png" width="430" alt="G-07" />
+
+**G-07 · 剑与魔法（西幻）**（High Fantasy）
+
+看点：看点：铠甲骑士与持杖法师并肩仰望巨树遗迹，符文金字与藤蔓共生，竖直构图把「古文明的高度」顶满画面——西幻组队经典机位。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+High fantasy anime illustration: an armored adventurer and a robed mage standing in the overgrown ruins of an elven hall. Build believable world detail, plate armor with real articulation and strap construction rather than drawn-on sculpting, a staff carved rather than manufactured, architecture following tall elvish proportion with weathered stone and forest slowly reclaiming the floor, and glowing runes acting as the only warm light source. Keep adventuring gear worn, repaired and mismatched. Compose a wide key visual with strong vertical columns and light dropping through a collapsed ceiling. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/G-08.png" width="430" alt="G-08" />
+
+**G-08 · 异世界转生**（Isekai）
+
+看点：看点：现代校服少年拎着塑料袋站在异世界集市，鞋下魔法阵微光，身后哥特教堂与浮空城——「穿越者刚落地」的错位感是异世界的核心叙事。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Isekai anime illustration: a bewildered young man in modern clothing standing in a fantasy town square still clutching a convenience-store item. Stage the collision explicitly, contemporary sneakers, windbreaker and plastic bag set against hand-cobbled stone, heavy timber framing and a guildhall facade, with a summoning magic circle fading beneath his feet and its last blue embers lifting into the air. Populate the background with genuinely nonhuman townsfolk going about entirely ordinary business. Compose a wide frame in which the world visibly dwarfs him. Render signage without readable characters. No logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-13.png" width="430" alt="G-13" />
+
+**G-13 · 赛博朋克**（Cyberpunk）
+
+看点：看点：雨夜霓虹巷口的义体少女，粉紫青三色光源互相打架，积水倒影糊成一层电子光漆，远处飞车灯轨划过——赛博朋克的高密度都市要「发霉」才对。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Cyberpunk anime illustration: a courier with a chrome prosthetic arm standing at the mouth of a rain-soaked alley in a stacked megacity. Build real density, signage layered six or seven storeys overhead, exposed cabling and bolted fire escapes, steam venting from street grates, and every wet surface mirroring the neon above it. Light her from competing magenta and cyan sources so both shoulders carry colored rim light while shadows sink toward black. Add broken reflections of unseen crowds in the puddles. Compose a deep wide frame with strong vertical recession. Render any signage without readable characters. No logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/G-15.png" width="430" alt="G-15" />
+
+**G-15 · 宇宙歌剧 / 太空**（Space Opera）
+
+看点：看点：舰桥剪影望向舷窗外的超新星星云，紫橙撞色的宇宙占满视口，仪表盘只给蓝光——宇宙歌剧的浪漫全在「人的渺小对星海的宏大」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Space opera anime illustration: a bridge crew silhouetted against a colored nebula from inside a starship command deck. Make the ship feel large and lived-in, a wide console run with believable instrumentation, heavy structural ribs overhead, layered deck levels and grime ground into the floor plating, set against a deep starfield and glowing gas cloud filling the forward viewport. Light the crew almost entirely from that window, keeping every face half in darkness. Leave one small figure standing apart at the rail for scale. Compose a wide atmospheric frame. Include no readable displays, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-17.png" width="430" alt="G-17" />
+
+**G-17 · 蒸汽朋克**（Steampunk）
+
+看点：看点：黄铜齿轮迷宫里的护目镜技师，蒸汽、油污、铆钉管道每一处都在运转，暖金色调把工业浪漫推到顶——蒸汽朋克的关键是机器要「活」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Steampunk anime illustration: an engineer in heavy goggles working inside a brass boiler room thick with steam. Commit to the material rules, machined brass gearing showing real tooth counts through open inspection plates, riveted pressure vessels, copper piping running in believable service routes rather than decoration, and Victorian tailoring cut for actual labor. Add honest grime, coal soot streaking every vertical surface and oil sheen on the floor plates. Use a warm sepia and verdigris scheme lit by hanging filament bulbs. Compose a mid-shot gaining depth through successive arches of pipework. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/G-18.png" width="430" alt="G-18" />
+
+**G-18 · 末世 / 废土**（Post-Apocalyptic）
+
+看点：看点：爬满绿藤的高速公路断桥上两个旅人走向夕阳，锈车与残楼被植被吞掉一半——废墟上长出自然，「希望的荒凉」比纯末日更耐看。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Post-apocalyptic anime illustration: two scavengers crossing a rusted highway overpass slowly reclaimed by tall grass. Sell environmental recovery rather than ruin cliche, the road surface split apart by tree roots, vehicle hulks half buried in weeds, oxidized corrugated steel, and dust haze flattening the horizon into pale layers. Give them mismatched repaired survival clothing instead of costume, with improvised packs and improvised water filters. Desaturate everything toward ochre and grey-green, and let sunlight arrive low, thick and dusty. Compose a wide frame with the humans deliberately small in it. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-21.png" width="430" alt="G-21" />
+
+**G-21 · 治愈慢生活**（Healing Slice of Life）
+
+看点：看点：壁炉、毛毯、猫狗与一本摊开的书，雨窗外是冷山湖，屋内暖光把每件织物烘出绒感——治愈系全靠「信息密度低加温度对比」。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Healing slice-of-life anime illustration: a young woman reading in a wooden cabin living room while rain tracks down the window beside her. Build it from small comforts, worn furniture carrying visible use marks, steam lifting from a kettle and a mug caught in the light, layered blankets, and books stacked on the floor rather than shelved neatly. Let soft north daylight do all the work with no harsh contrast anywhere, and keep the palette warm and low-saturation. Compose a wide quiet interior with generous negative space and no urgency. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/G-22.png" width="430" alt="G-22" />
+
+**G-22 · 恋爱 / 青春**（Romance）
+
+看点：看点：共撑一把透明伞的两个校服学生，伞面挂着雨珠与樱花，路灯把轮廓描成金边——恋爱题材的「距离感」：近到能听见呼吸，又还没牵手。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Romance anime illustration: two students sharing one umbrella beneath cherry blossom trees at dusk. Build the scene on restraint rather than declaration, eye contact only half completed, one hand hesitating near a sleeve, blossom petals catching the streetlight, and rain reduced to fine legible streaks so nothing obscures the pair. Render faces with soft gradients and genuine blush rather than graphic marks. Dissolve everything behind them into gentle bokeh so the two separate cleanly from the world. Compose a medium two-shot with slight overhead tilt. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-23.png" width="430" alt="G-23" />
+
+**G-23 · 美食 / 料理**（Food & Cooking）
+
+看点：看点：拉面碗特写顶到画面边缘，溏心蛋断面、叉烧油花、海苔与蒸气的层次分明，暖灯下的汤面反光——美食题材第一定律：把食物当主角拍。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Food-focused anime illustration: a bowl of ramen mid-preparation lit eagerly from a three-quarter overhead angle. Prioritize appetite over literal accuracy, glossy broth carrying a convincing specular highlight with floating beads of rendered oil, steam rising in soft readable plumes, noodles drawn with individual strand definition rather than a mass, nori and narutomaki placed deliberately, and chashu showing real grain and rendered fat marbling. Add warm practical kitchen bokeh with hanging bulbs behind. Compose a tight forward-overhead shot with the bowl dominating frame and no human figures. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/G-30.png" width="430" alt="G-30" />
+
+**G-30 · 恐怖 / 灵异**（Horror & Occult）
+
+看点：看点：和馆长廊尽头立着一个白衣身影，全屋只点一盏行灯加窗外月光，画面九成压在暗部——恐怖感来自「不敢看清」，留白越多越慌。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Horror anime illustration: a pale figure standing motionless at the far end of a dark tatami hallway at night. Keep the dread structural rather than graphic, negative space doing most of the work, shadows falling a few degrees wrong relative to the visible light source, subtle distortion in proportions the eye registers before the mind does, and grainy low-light texture concealing anything that would otherwise resolve. Use no gore, no blood and no jump-scare framing anywhere. Compose a deep one-point perspective with the figure small and unnaturally still. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+<td valign="top" width="50%">
+
+<img src="examples/G-32.png" width="430" alt="G-32" />
+
+**G-32 · 仙侠 / 武侠国风**（Xianxia & Wuxia）
+
+看点：看点：白衣修士踏剑掠过云海，山尖破云、飞瀑直下，金光从云隙里漏出——「御剑飞行加山水云海」的东方空间观，画面要能呼吸。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Xianxia wuxia illustration: a cultivator riding a flying sword above a sea of cloud between jade mountain peaks. Hold to the regional vocabulary, layered hanfu with wide sleeves streaming in the altitude wind, the blade rendered fine and straight rather than as a fantasy broadsword, mountain forms drawn with vertical Chinese landscape logic instead of photographic geology, drifting mist handled as genuine negative space, and visible ink-wash influence throughout the far distance. Add a faint daoist talisman glow along the blade edge. Compose a vertical frame with enormous sky above. No text, logos or watermarks.
+```
+
+</details>
+
+</td>
+</tr>
 </table>
 
-<details><summary>📝 已登记提示词、待配图的条目（34 条）</summary>
+<details><summary>📝 已登记提示词、待配图的条目（3 条）</summary>
 
 | 条目 | 名称 | 验证点（配图时必须演示） |
 | --- | --- | --- |
 | A2-05 | 10 年代高清电视动画 | 线条极锐利、明度高，阴影分两层而不是一层——「看起来像新番」的制式感。 |
-| A2-07 | 录像带 VHS 噪波 | 磁迹失真、色度溢出、扫描线、底部噪声带——介质损伤是画面语言，不是滤镜贴纸。 |
-| A3-14 | Studio Colorido（3D 融合） | 3D 背景透视精确、光源全场统一，2D 人物带轻微 CG 照明过渡——两个维度的接缝要几乎看不见。 |
-| A4-01 | 国产二维动画风 | 装饰性优先于体积感，出现东方纹样符号；要么厚涂华丽要么线描水墨，不落进日式赛璐璐。 |
-| A4-02 | 国产三维动漫 CG | UE 渲染质感——布料、金属、皮肤次表面散射都偏真实，但整体构图与服化是国潮语汇。 |
-| A4-06 | 蜘蛛侠平行宇宙（2D+3D 混合） | 三维角色身上贴着网点、手绘轮廓与故障效果，「会动的漫画」感成立；亮色分层要大胆。 |
-| A4-07 | 韩漫 / Webtoon 条漫 | 服装与道具精细到时尚画报级、发丝分层飘逸、眼妆高光对比强——竖屏条漫审美的辨识度。 |
-| A4-08 | VTuber / 虚拟主播立绘 | 正面构图、配饰记忆点强烈、配色鲜明、背景干净——剪影缩到小图仍一眼可辨。 |
-| A4-09 | 动画截图感 | 一层薄胶片颗粒加广播级轻微压缩感——让画面脱离 AI 插画长相的那层「官方截图」壳。 |
-| A4-10 | Vaporwave / 复古未来主义 | 粉青配色、透视网格地面、铬金属字与故障时间码——80 年代对未来的想象遗骸。 |
 | A5-01 | 橡胶管动画（1930s） | 四肢像橡胶管任意弯曲不断、白手套、眯缝眼——程式化弯曲而轮廓不断线。 |
 | A5-03 | 清晰线条派（丁丁线） | 人物线条粗细完全均匀、几乎无阴影，背景却极写实——人物简环境繁的反差是本流派签名。 |
-| A5-05 | 欧式绘本水彩 | 墨线松动、水彩色块溢出轮廓、配色含蓄带灰——与日式的干净相反的松弛感。 |
-| A5-06 | 黏土定格动画 | 表面留指纹与工具痕、道具比例略笨拙、棚拍光——实体微缩场景的「逐格拍摄」证据。 |
-| A5-08 | 有限动画现代主义 | 形体压到最少线条、平面海报式构图、有限帧表达动作——设计先于写实。 |
-| A5-09 | 拼贴与混合媒介 | 报刊/布料/照片撕贴进画面，接缝与撕边保留——真实材质与虚构图像交错。 |
-| A5-10 | 孔版印刷质感 | 只用两三个专色叠印、套印故意错位、网点与油墨不匀——孔版印刷的「不完美」必须出现。 |
-| A5-11 | 童书绘本插画 | 轮廓柔和、配色温暖、构图一眼看懂；线条松弛偏手绘童趣，不是工业精致的萌系。 |
-| A5-12 | 转描现实主义 | 动作流畅如真人实拍，但个别帧有微妙形变——真实与轻微不安并存。 |
-| A5-13 | 苏联 · 东欧手绘 | 玻璃油画式层叠、厚涂水粉背景、斯拉夫民间服饰纹样——诗意而忧伤的童话情绪。 |
-| A5-14 | 花窗玻璃与马赛克 | 黑色铅线分割大块彩色玻璃、光从背后穿透——铅线是结构不是描边。 |
-| G-01 | 热血战斗 | 决定性姿势 + 集中线 + 冲击帧 + 能量气场，构图有明确攻击方向——少年战斗的四件套缺一不可。 |
-| G-03 | 忍者 / 武士 | 和服形制准确、刀与手里剑的道具语言、日式建筑空间——时代剧质感靠考据不靠泛用和风贴纸。 |
-| G-07 | 剑与魔法（西幻） | 剑与魔法的西幻语汇——铠甲形制、法术视觉化方式、欧式背景；不是和风也不是科幻。 |
-| G-08 | 异世界转生 | 异世界转生的「平凡人闯异境」反差——现代感残留与奇幻环境同框，才是该题材的签名。 |
-| G-13 | 赛博朋克 | 高密度都市 + 霓虹 + 阴雨天反光，技术先进而环境脏旧——「发霉的半成品」对比要成立。 |
-| G-15 | 宇宙歌剧 / 太空 | 宇宙歌剧的宏大尺度——巨舰/空间站与人的比例对比、舱内人造光与舷外星光双光源。 |
-| G-17 | 蒸汽朋克 | 蒸汽动力机械的铆钉、管道、压力表外露，煤烟与蒸汽要参与氛围——维多利亚语汇而非蒸汽波。 |
-| G-18 | 末世 / 废土 | 废土的「自然收回人造物」——植被爬满残骸、锈蚀层次、资源痕迹；荒凉但不空洞。 |
-| G-21 | 治愈慢生活 | 低信息密度、低对比、大量空镜与柔和光影——画面应该能「呼吸」。信息塞满就是失败。 |
-| G-22 | 恋爱 / 青春 | 青春恋爱的距离感语言——视线不交、半身入画、留白多于接触；甜度靠构图不靠表情包。 |
-| G-23 | 美食 / 料理 | 食物的「刚出锅」证据——热气、光泽、切面层次；人物反应是佐料不是主菜。 |
-| G-30 | 恐怖 / 灵异 | 靠氛围不靠血浆——违和的日常空间、影子里的异常、微妙失衡的比例。 |
-| G-32 | 仙侠 / 武侠国风 | 汉服、飞剑、符箓之外，关键是「留白 + 云海 + 山水」的东方空间观——画面不能被填满。 |
 
 </details>
 
 <!-- GALLERY-EMBED:END -->
+
+每一步都**能搜到风格**：中文名、别名、跨语言、描述式搜索都认。
+每份结果都自带**效果说明**——四步各自决定什么、画风在你选的模型上叫不叫得动、
+恒定保留什么（禁项）、哪些话没经过实测。说得清变化，而不是只甩一段英文。
+
+本地使用：克隆后直接打开 `index.html`（与在线版同源）。
+不克隆仓库、只想快速上手见 [`docs/quick-start.md`](docs/quick-start.md)；
+在 Codex / WorkBuddy 等 Agent 里调用见 [`SKILL.md`](codex-skill/anime-prompt-forge/SKILL.md)；
+不确定从哪开始，先看 [`INDEX.md`](INDEX.md) —— 一页索引，告诉你每个问题该查哪张表。
+
+在此基础上还有一层**开放式知识库**：十二个库、**537 个节点**、九个组合槽位，外加检索 / 组合 / 变形三套引擎。它的目标是——
+
+> **已知内容可检索，未收录内容可拆解，新的创作需求可通过模块组合与受控变形构建。**
+
+也就是说：有的直接复制，没有的组合出来，组合之外还能再变形，生成空间不再受限于已收录的数据。
 
 ## ⚠️ 商用前必读：授权边界
 

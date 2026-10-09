@@ -1366,14 +1366,18 @@ async function main() {
   const totalDraw = stats.free.length + stats.needCare.length + stats.noShot.length;
   ok(totalDraw === 133 - GALLERY_SHOT_N,
     "候选池 " + totalDraw + " 条（应为八段 133 减去已配图 " + GALLERY_SHOT_N + "）");
-  /* ST段当前 0 条可补：13 条已配图，剩下 1 条（ST-006）是 R2。
-     所以断言写成「七段齐 + ST 不为负」，不能硬要求八段都在。 */
+  /* 候选池随配图进度收缩，不能硬编码「七段全覆盖」。
+     改为校验：画廊里每个 img:null 的条目必须仍在候选池内
+     （登记了待配图却不在池中 = 统计口径漂移）。 */
   const segs = new Set(stats.free.map(e => {
     const c = win.nodeCode ? win.nodeCode(e.id) : "";
     return c ? c.split("-")[0] : "?";
   }));
-  ok(["ER", "SB", "RG", "MV", "TH", "LT", "PL"].every(s => segs.has(s)),
-    "R0 待补覆盖七段（实到 " + [...segs].sort().join(",") + "）");
+  const poolIds = new Set(stats.free.map(e => e.id));
+  const missingPool = (win.GALLERY || []).filter(g => !g.img && !poolIds.has(g.id));
+  ok(missingPool.length === 0,
+    "画廊待配条目全部在候选池内"
+    + (missingPool.length ? "（缺: " + missingPool.map(g => g.id).join(" ") + "）" : "（实到段: " + [...segs].sort().join(",") + "）"));
   ok(stats.free.every(e => {
     const c = win.nodeCode(e.id);
     return ["ST", "ER", "SB", "RG", "MV", "TH", "LT", "PL"].indexOf(c.split("-")[0]) >= 0;
