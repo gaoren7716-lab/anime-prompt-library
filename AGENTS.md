@@ -113,15 +113,21 @@
 
 ## 七、改完必须跑全量回归
 
-```bash
-node tools/check_codes.js        # 编码体检（含旧码四种写法）
-node tools/check_ids.js          # 编号漂移体检（WK 冻结名单 / 追加稳定 / 全库引用扫描）——改编号必跑
-node tools/check_studio.js       # 工作流数据层
-node tools/check_gacha.js        # 抽卡
-node tools/check_rights.js       # 授权与去标识
-node tools/check_model_prompts.js # 按模型改写层 + perStyle 标定
-node tools/ui_test.js            # 真实 jsdom 渲染
-```
+每条检查的**职责边界**——它们查的东西性质不同，一条绿不等于其他性质也绿
+（如 `check_rights` 绿只说明必填资料满足规则，不等于真实授权）：
+
+| 命令 | 查什么 | 不保证什么 |
+| --- | --- | --- |
+| `check_codes.js` | 编码四种写法、旧码迁移、派生规则 | 语义正确性 |
+| `check_ids.js` | WK 冻结名单、追加稳定、全库引用扫描 | 编码之外的内容质量 |
+| `check_studio.js` | 工作流数据层结构 | 出图效果 |
+| `check_gacha.js` | 抽卡随机逻辑与候选池 | 同上 |
+| `check_rights.js` | 授权字段完整、去标识规则命中 | **真实法律授权** |
+| `check_model_prompts.js` | 五模型改写层、perStyle 标定 | 模型实测效果（仅 Sana 真出过图） |
+| `ui_test.js` | jsdom 真渲染、复制按钮可用 | 视觉效果 |
+| `smoke.js` / `check_engine.js` | 引擎冒烟 | 数据全集 |
+| `check_skill.js` | Skill 包自包含、A/B 对拍 | Skill 在外部 Agent 的体验 |
+| `check_text.py` / `detect_latin.py` | 中文文本质量 | 事实准确性 |
 
 全部退出码必须为 0。改数据后还要重跑构建脚本（**在项目根目录，不在 tools/**）：
 
