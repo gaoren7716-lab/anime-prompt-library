@@ -239,9 +239,11 @@ head("【7】示例画廊引用的条目真实存在");
   ok(GALLERY.length > 0 && noEnt.length === 0, noEnt.length === 0
     ? "画廊 " + GALLERY.length + " 条引用全部命中"
     : "画廊引用了不存在的条目：" + noEnt.map(g => g.id).join(" "));
-  /* 图文件名必须用旧 id（重排不至于让图与词条错位的那条约定） */
+  /* 图文件名必须用旧 id（重排不至于让图与词条错位的那条约定）。
+     img 为 null 的待配图条目无文件名可查，跳过。 */
   const badImg = GALLERY.filter(g => {
-    const base = String(g.img || "").replace(/^examples\//, "").replace(/\.(png|jpg|jpeg)$/i, "");
+    if (!g.img) return false;
+    const base = String(g.img).replace(/^examples\//, "").replace(/\.(png|jpg|jpeg)$/i, "");
     return base !== g.id;
   });
   ok(badImg.length === 0, "图文件名与旧 id 一致"

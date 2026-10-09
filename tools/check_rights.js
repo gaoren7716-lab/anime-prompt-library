@@ -423,8 +423,11 @@ GALLERY.forEach(g => {
     + (ENTRIES_BY_ID[g.id] ? "" : " → examples.js 与数据源已漂移"));
 });
 
-/* 10b. 图片必须真的在磁盘上。DOM 有 src ≠ 文件存在。 */
+/* 10b. 图片必须真的在磁盘上。DOM 有 src ≠ 文件存在。
+        img 为 null 的是「先登记提示词、后补图」的待配条目——
+        没有图可查，10a/10c/10f 的授权与正文断言照常覆盖它。 */
 GALLERY.forEach(g => {
+  if (!g.img) return;
   const p = path.join(ROOT, g.img);
   ok(fs.existsSync(p), g.id + " 示例图存在：" + g.img);
   if (fs.existsSync(p)) {
@@ -433,6 +436,15 @@ GALLERY.forEach(g => {
       + (kb <= 20 ? " → 可能是 0 字节或占位文件" : ""));
   }
 });
+/* 待配图条目的 note 必须以「待配图」开头，且不得写成「看点」——
+   看点是图上真看得见的东西，没有图却写看点等于给假证据。 */
+const pendingG = GALLERY.filter(g => !g.img);
+ok(pendingG.every(g => /^待配图/.test(g.note || "")),
+  "待配图条目（" + pendingG.length + " 条）的 note 均以「待配图」标注"
+  + (pendingG.some(g => !/^待配图/.test(g.note || ""))
+    ? " → " + pendingG.filter(g => !/^待配图/.test(g.note || "")).map(g => g.id).join(" ") : ""));
+ok(GALLERY.filter(g => g.img).every(g => !/^待配图/.test(g.note || "")),
+  "已配图条目的 note 不是待配图措辞");
 
 /* 10c. 全是 R0：画廊是门面，只放可自由商用的内容。
        出现 R1–R3 就是把需要署名/改写的东西摆出来让人抄。

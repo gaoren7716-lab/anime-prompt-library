@@ -510,7 +510,11 @@ function openRenderMorph() {
    R2/R3 条目要先过 rights 层改成去标识化表述才配图，
    把它们混在待补清单里，等于给出补不了的活儿。 */
 function galleryStats(list) {
-  var shot = (typeof GALLERY !== "undefined" ? GALLERY : []).map(function (g) { return g.id; });
+  /* 已配图 = img 有值的条目。img 为 null 的是「提示词已就绪、待补图」，
+     不算已配——它们继续留在 R0 候选池里，覆盖进度才不会虚高。 */
+  var shot = (typeof GALLERY !== "undefined" ? GALLERY : [])
+    .filter(function (g) { return !!g.img; })
+    .map(function (g) { return g.id; });
   var shotSet = {};
   shot.forEach(function (id) { shotSet[id] = 1; });
 
@@ -623,10 +627,18 @@ function openRenderGallery() {
     }
     var tierZh = (typeof RIGHTS !== "undefined" && RIGHTS.TIERS && RIGHTS.TIERS[tier])
       ? RIGHTS.TIERS[tier].zh : "";
+    /* img 为 null 是「提示词已就绪、待补图」条目：
+       占位块替代破图，提示词照常可复制——提示词不因没图而不可用。 */
+    var media = g.img
+      ? '<a href="' + esc(g.img) + '" target="_blank" rel="noopener" title="点击看大图">'
+        + '<img src="' + esc(g.img) + '" alt="' + esc(e.zh) + ' 出图示例" loading="lazy">'
+        + '</a>'
+      : '<div style="display:flex;align-items:center;justify-content:center;'
+        + 'min-height:180px;border:1px dashed var(--line,#c9c2b8);border-radius:8px;'
+        + 'color:var(--muted,#8a8577);font-size:13px;text-align:center;padding:12px;">'
+        + '📝 提示词已就绪 · 待配图<br>复制下方正文即可先出图</div>';
     return '<div class="gal-card">'
-    + '<a href="' + esc(g.img) + '" target="_blank" rel="noopener" title="点击看大图">'
-    +   '<img src="' + esc(g.img) + '" alt="' + esc(e.zh) + ' 出图示例" loading="lazy">'
-    + '</a>'
+    + media
     + '<div class="gal-body">'
     +   '<div class="gal-head"><span class="t">' + esc(e.zh) + '<i>' + esc(e.en || "") + '</i></span></div>'
     +   '<div class="gal-meta">'

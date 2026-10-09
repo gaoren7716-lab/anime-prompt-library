@@ -1133,7 +1133,13 @@ async function main() {
     "画廊卡数与数据源一致：" + galCards.length + " = " + GALLERY_N);
   if (galCards.length) {
     const imgs = [...grid().querySelectorAll(".gal-card img")];
-    ok(imgs.length === galCards.length, "每张卡都带出图（" + imgs.length + " 张）");
+    /* 双形态卡：img 有值 = 配图卡，null = 待配图卡（占位块 + 可复制提示词）。
+       卡数不变，但「带图卡数」只数真图——待配卡混进来一张破图都不该有。 */
+    const doneN = (win.GALLERY || []).filter(g => g.img).length;
+    ok(imgs.length === doneN, "配图卡都带真图（" + imgs.length + " / " + doneN + "）");
+    const pendingCards = galCards.length - imgs.length;
+    ok(grid().textContent.includes("待配图") || pendingCards === 0,
+      "待配图卡有占位标注（" + pendingCards + " 张无图卡）");
     /* 扩展名允许 .png / .jpg / .webp / .avif：
        补图时用哪个取决于出图通道的原生格式（免 key 通道回 jpg），
        强行统一成 png 只会逼人多做一次无意义的格式转换，
@@ -1350,13 +1356,16 @@ async function main() {
   ok(sbCare > 0, "SB 段有 " + sbCare + " 条落在需改写档（若为 0 说明授权判级失效）");
   const sbFree = stats.free.filter(e => /^A3-/.test(e.id)).length;
   ok(sbFree < 14, "SB 段仅 " + sbFree + "/14 条可直接配图（工作室名受保护，不该整段自由）");
-  /* 候选池必须只含画廊能出图的八段，且已配图的 13 张不计入待补。
+  /* 候选池必须只含画廊能出图的八段，且已配图的条目不计入待补。
      collectEntries() 会把作品层一并返回（366 条），
      不筛的话 233 部作品混进待补清单，覆盖率的分母就废了。
-     八段 133 条减去已配图 13 条 = 120 条待补。 */
+     「已配图」= GALLERY 里 img 有值的卡（img: null 是已登记提示词
+     待补图的条目，仍在候选池里）；画廊扩到 50 条后配图卡 13 张，
+     133 - 13 = 120 条待补，其中 37 条提示词已就绪。 */
+  const GALLERY_SHOT_N = (win.GALLERY || []).filter(g => g.img).length;
   const totalDraw = stats.free.length + stats.needCare.length + stats.noShot.length;
-  ok(totalDraw === 133 - GALLERY_N,
-    "候选池 " + totalDraw + " 条（应为八段 133 减去已配图 " + GALLERY_N + "）");
+  ok(totalDraw === 133 - GALLERY_SHOT_N,
+    "候选池 " + totalDraw + " 条（应为八段 133 减去已配图 " + GALLERY_SHOT_N + "）");
   /* ST段当前 0 条可补：13 条已配图，剩下 1 条（ST-006）是 R2。
      所以断言写成「七段齐 + ST 不为负」，不能硬要求八段都在。 */
   const segs = new Set(stats.free.map(e => {

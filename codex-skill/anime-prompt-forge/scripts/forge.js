@@ -982,8 +982,11 @@ if (cmd === "gallery") {
   try {
     G = require(path.join(ROOT, "assets", "examples.js")).GALLERY || [];
   } catch (e) { G = []; }
+  /* 已配图 = GALLERY 里 img 为真值的条目。
+     img 为 null 的是「已登记提示词、待补图」条目——
+     它们该继续出现在待补清单里，不能算成已配。 */
   const shot = {};
-  G.forEach(g => { shot[g.id] = g; });
+  G.forEach(g => { if (g.img) shot[g.id] = g; });
 
   /* 待补清单按段统计。段码从规范码取首段，
      「旧 id → 规范码」这条路必须走映射表，不能靠字符串猜。 */
