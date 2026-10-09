@@ -561,6 +561,11 @@ var MODEL_PROMPTS = (function () {
     var sid = txt(styleId);
     if (!sid) return { level: "unknown", why: "没有取到画风条目" };
     var mk = txt(modelKey);
+    /* 键名归一：标定表列名用短键（gpt），对外接口收的是模型键（gpt-image-2）。
+       不归一的话 gpt 列整列死数据——of() 永远拿 unknown，
+       GPT 通道的改写策略静默退化成「名字 + 特征」，页面上看不出任何异常。 */
+    if (mk === "gpt-image-2") mk = "gpt";
+    else if (mk === "nano-banana") mk = "nano";
     /* 作品段不逐条标（见上文约定）。 */
     if (sid.indexOf("WK-") === 0) {
       return { level: "unknown", why: "作品段未做逐条标定，仍按名称 + 特征词给出" };

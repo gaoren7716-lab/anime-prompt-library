@@ -115,6 +115,12 @@ node scripts/forge.js build --style ST-001 --theme TH-020 --model mj --json
 - `--json` 时多四个字段：`model` / `modelPrompt` / `modelParams` / `modelNote`。
   `en` 仍然是通用正文（基准），`modelPrompt` 是优化版 —— **不互相覆盖**。
 
+**输出永远带 `explain`（效果说明）。** 回答「这张图会怎么变」：
+四步各自决定什么（`changed[].role`）、恒定保留什么（`keepAlways`，禁项每版自带）、
+所选画风在五个模型上的激活标定（`styleFit`，改写层已按它调整写法）、
+测试状态与限制（`limits`，read 不是 test）。向用户转述结果时**必须带上这段**，
+不能只甩一大段英文正文——用户需要知道系统替他做了什么决定、哪些话没经过实测。
+
 **MJ 的标签与参数分开给。** 它要求标签里混进 `--ar` 之外的符号就废，
 所以 `modelPrompt` 是纯标签，`modelParams` 是 `--ar 1:1 --niji 6 --stylize 150`，
 粘的时候标签在前、参数在后连成一段。

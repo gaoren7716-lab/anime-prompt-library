@@ -170,6 +170,53 @@ function modelPromptOf(modelKey, ratio) {
   } catch (e) { return generic(); }
 }
 
+/* ---------- 效果说明（说得清变化） ----------
+   光给一段英文正文，用户不知道系统替他做了什么决定、换模型会差多少、
+   哪些话经过实测哪些只是工程判断。这一层把三件已经存在的事实暴露出去，
+   **不新编任何创作判断**：
+     ① 四步各自的贡献 —— STEP_ROLE 与数据层各步的 hint 同源；
+     ② 画风 × 模型的激活标定 —— model-prompts.js 的 STYLE_ACTIVATION，
+        改写层已经按它调整过写法，这里只是把同一事实告诉调用方；
+     ③ 测试状态 —— model-prompts.js 头部如实声明的「仅 Sana 实测」，
+        必须跟着每次输出走，否则 read 会在下游被当成 test 引用。 */
+const STEP_ROLE = {
+  style:  "决定整幅怎么画：线条、上色、质感与光影的全部取向",
+  theme:  "决定画什么：主体、场景与叙事内容",
+  layout: "决定怎么摆：构图、画幅与版面结构",
+  palette:"决定什么颜色：主色、辅色与落色范围"
+};
+const FIT_ZH = {
+  strong: "强（风格名一给就出）",
+  weak:   "弱（改写层已切到特征词优先）",
+  none:   "叫不动（已隐去风格名、只给特征）",
+  unknown:"未标定（按名字 + 特征给出）"
+};
+function buildExplain(chosen, styleCode) {
+  const ex = {
+    changed: (chosen || []).map(c => ({
+      step: c.step, code: c.code, zh: c.zh, role: STEP_ROLE[c.step] || ""
+    })),
+    keepAlways: [
+      "无文字 / 无水印 / 无 UI 元素 —— 每一版提示词都自带禁项，不需要手动追加"
+    ],
+    styleFit: null,
+    limits: [
+      "出图实测：目前只有 Sana（免 key 通道）真出过图；其余模型是按其语法改写，"
+      + "未逐条实测——适配层的判断属 read 级（工程推断），不是 test 级（实测结论）。",
+      "Midjourney 没有公开出图 API：MJ 版给的是标签串 + --参数，"
+      + "需到官网 / Discord 自行粘贴。"
+    ]
+  };
+  if (styleCode && MODEL_PROMPTS && MODEL_PROMPTS.activationOf) {
+    ex.styleFit = MODEL_PROMPTS.keys().map(k => {
+      const a = MODEL_PROMPTS.activationOf(styleCode, k);
+      const r = (RENDER && RENDER.modelById && RENDER.modelById(k)) || {};
+      return { model: k, zh: r.zh || k, fit: a.level, why: FIT_ZH[a.level] || a.level };
+    });
+  }
+  return ex;
+}
+
 function idsOfCurrentSelection() {
   const ids = {};
   const st = globalThis.STUDIO;
@@ -1131,7 +1178,13 @@ if (loadMode === "bundle") {
     missing: b.missing,
     ratio: b.layout ? b.layout.ratio : "",
     rights: ["style", "theme"].map(k => b[k]).filter(Boolean)
-      .map(e => ({ id: e.id, zh: e.look || e.zh, tier: e.tier || "R0" }))
+      .map(e => ({ id: e.id, zh: e.look || e.zh, tier: e.tier || "R0" })),
+    /* 与仓库分支的 chosen 同构：效果说明（explain）两种模式都要吃这份摘要。 */
+    chosen: ["style", "theme", "layout", "palette"].map(k => {
+      const e = b[k];
+      return e ? { step: k, id: e.id, code: e.code || e.id,
+                   zh: e.look || e.zh } : null;
+    }).filter(Boolean)
   };
   (out.rights || []).forEach(r => {
     const order = { R0: 0, R1: 1, R2: 2, R3: 3 };
@@ -1169,6 +1222,11 @@ if (loadMode === "bundle") {
     }).filter(Boolean)
   };
 }
+
+/* 效果说明两种模式都挂：JSON 里是 explain 字段，
+   文本输出里是「这张图会怎么变」段（见下方打印分支）。 */
+const _styleSel = (out.chosen || []).find(c => c.step === "style");
+out.explain = buildExplain(out.chosen, _styleSel ? _styleSel.code : "");
 
 if (flag("--json")) {
   /* --model 给的是「按那个模型改写过的提示词」，
@@ -1253,6 +1311,24 @@ if (flag("--json")) {
   if (out.chosen && out.chosen.length) {
     console.log("=== 组合 ===");
     out.chosen.forEach(c => console.log("  " + c.step + "\t" + c.code + "\t" + c.zh));
+    console.log("");
+  }
+  /* 效果说明紧跟组合：组合列出「选了什么」，这一段说清「所以画面会怎么变」。
+     顺序不能颠倒——先有选择、后有推论，读起来才是同一条因果链。 */
+  if (out.explain) {
+    const STEP_ZH2 = { style: "画风", theme: "题材", layout: "版式", palette: "配色" };
+    console.log("=== 效果说明（这张图会怎么变） ===");
+    out.explain.changed.forEach(c =>
+      console.log("  " + (STEP_ZH2[c.step] || c.step) + " · " + c.code
+        + " " + c.zh + " —— " + c.role));
+    out.explain.keepAlways.forEach(k => console.log("  恒定保留：" + k));
+    if (out.explain.styleFit && out.explain.styleFit.length) {
+      console.log("  画风名在各模型上叫不叫得动（改写层已按此调整写法）：");
+      out.explain.styleFit.forEach(f =>
+        console.log("    " + f.zh + "：" + f.why));
+    }
+    console.log("  测试状态与限制：");
+    out.explain.limits.forEach(l => console.log("    · " + l));
     console.log("");
   }
   if (out.rights && out.rights.length) {
