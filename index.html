@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>动漫提示词库 · Anime Prompt Library</title>
+<style>
+:root{
+  --bg:#0e1015; --panel:#161922; --panel2:#1d222c; --panel3:#242a36;
+  --line:#2b3240; --txt:#e7e9ef; --dim:#99a1b3; --dim2:#6b7385;
+  --accent:#7c5cff; --accent2:#22d3ee; --ok:#34d399; --warn:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--txt);
+  font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--panel3);border-radius:5px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- 布局 ---------- */
+.app{display:flex;height:100vh;overflow:hidden}
+.side{
+  width:216px;flex:0 0 216px;background:var(--panel);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;overflow-y:auto;
+}
+.brand{padding:18px 18px 14px;border-bottom:1px solid var(--line)}
+.brand h1{font-size:16px;font-weight:700;letter-spacing:.5px}
+.brand h1 span{color:var(--accent)}
+.brand p{font-size:11px;color:var(--dim2);margin-top:4px;letter-spacing:.5px}
+.nav{padding:10px 10px 20px;flex:1}
+.nav .grp{font-size:10.5px;color:var(--dim2);letter-spacing:1.2px;margin:14px 8px 6px;text-transform:uppercase}
+.nav button{
+  width:100%;text-align:left;background:none;border:0;color:var(--dim);
+  padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;
+  display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:inherit;
+}
+.nav button:hover{background:var(--panel2);color:var(--txt)}
+.nav button.on{background:var(--accent);color:#fff;font-weight:600}
+.nav button .n{font-size:11px;opacity:.75;font-variant-numeric:tabular-nums}
+
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.top{
+  padding:14px 22px;border-bottom:1px solid var(--line);background:var(--panel);
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.search{
+  flex:1;min-width:220px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:8px;padding:9px 12px;color:var(--txt);font-size:13px;font-family:inherit;outline:none;
+}
+.search:focus{border-color:var(--accent)}
+.hint{font-size:11.5px;color:var(--dim2)}
+.stat{font-size:12px;color:var(--dim);white-space:nowrap}
+.stat b{color:var(--accent2)}
+
+.filters{padding:10px 22px;display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.chip{
+  background:var(--panel2);border:1px solid var(--line);color:var(--dim);
+  padding:4px 11px;border-radius:20px;font-size:11.5px;cursor:pointer;font-family:inherit;
+}
+.chip:hover{color:var(--txt);border-color:var(--dim2)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+
+/* 底部留白只需容纳最后一张卡的 margin，配方坞已占独立布局行，不再需要额外补偿 */
+.body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:18px 22px 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+
+/* ---------- 卡片 ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.card:hover{border-color:#3a4354}
+.card.hi{border-color:var(--accent)}
+.chead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ctitle{font-size:14.5px;font-weight:600;line-height:1.35}
+.ctitle i{font-style:normal;color:var(--accent2);font-size:11.5px;font-weight:400;display:block;margin-top:2px;letter-spacing:.3px}
+.cid{font-size:10px;color:var(--dim2);font-variant-numeric:tabular-nums;white-space:nowrap;flex:0 0 auto}
+.cidbox{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex:0 0 auto}
+.cidbox .code{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:#22d3ee;
+  background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.26);border-radius:5px;
+  padding:1.5px 6px;cursor:pointer;white-space:nowrap}
+.cidbox .code:hover{background:rgba(34,211,238,.2)}
+/* ---- 授权徽章（与编码工作台 cw-rt 同一套配色，避免同一件事两种颜色） ---- */
+.rid{display:flex;align-items:center;gap:4px;margin-top:4px}
+.rt{font-size:9.5px;padding:1px 6px;border-radius:8px;white-space:nowrap;cursor:help;
+  font-family:ui-monospace,Consolas,monospace}
+.rt-R0{background:rgba(52,211,153,.14);color:#6ee7b7}
+.rt-R1{background:rgba(107,127,214,.16);color:#a5b4fc}
+.rt-R2{background:rgba(251,191,36,.16);color:#fcd34d}
+.rt-R3{background:rgba(248,113,113,.16);color:#fca5a5}
+.rnote{font-size:11px;line-height:1.55;color:var(--dim);background:rgba(248,113,113,.06);
+  border-left:2px solid rgba(248,113,113,.42);padding:5px 9px;border-radius:0 4px 4px 0;margin-top:7px}
+.rnote.warn{background:rgba(251,191,36,.06);border-left-color:rgba(251,191,36,.45)}
+.cidbox .oldid{font-size:9.5px;color:var(--dim2);font-family:ui-monospace,Consolas,monospace;opacity:.7}
+.meta{font-size:11px;color:var(--dim2);display:flex;gap:6px;flex-wrap:wrap}
+.meta span{background:var(--panel2);border:1px solid var(--line);padding:1px 7px;border-radius:4px}
+.desc{font-size:12.5px;color:var(--dim);line-height:1.62}
+.note{font-size:11.5px;color:var(--warn);background:rgba(251,191,36,.07);border-left:2px solid var(--warn);padding:5px 9px;border-radius:0 4px 4px 0;line-height:1.5}
+.kws{display:flex;flex-wrap:wrap;gap:5px}
+.kw{background:var(--panel2);border:1px solid var(--line);color:#b9c0d0;font-size:10.5px;padding:2.5px 7px;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;cursor:pointer}
+.kw:hover{border-color:var(--accent2);color:var(--accent2)}
+/* ---- 提示词卡 ---- */
+.pcard{margin-top:9px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#0b0d12}
+.pcard .phead{display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(124,92,255,.10);border-bottom:1px solid var(--line)}
+.pcard .phead span{font-size:11px;color:#a89bff;letter-spacing:.3px;flex:1}
+.pcard .phead .tier{font-size:10px;color:#22d3ee;background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.35);padding:1px 7px;border-radius:10px;cursor:help;white-space:nowrap}
+.pcard .phead .btn{padding:3px 9px;font-size:10.5px}
+.sechint{font-size:11.5px;color:var(--dim);line-height:1.6;padding:1px 2px}
+.pcard .pbody{padding:9px 11px;font-size:11.5px;line-height:1.7;color:#c6cddf;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace}
+.pcard details{border-top:1px solid var(--line)}
+.pcard summary{cursor:pointer;padding:6px 11px;font-size:11px;color:#8d97ab;user-select:none;list-style:none}
+.pcard summary::-webkit-details-marker{display:none}
+.pcard summary::before{content:"▸ ";color:#7c5cff}
+.pcard details[open] summary::before{content:"▾ "}
+.pcard .psub{padding:2px 11px 10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;line-height:1.65;color:#8d97ab;word-break:break-word;display:flex;gap:8px;align-items:flex-start}
+.pcard .psub b{flex:1;font-weight:400;min-width:0}
+.pcard .psub i{flex:none;color:#7c5cff;font-style:normal;width:52px;text-align:right}
+.demo{background:#0b0d12;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:11px;color:#8d97ab;font-family:ui-monospace,Menlo,Consolas,monospace;line-height:1.55;word-break:break-word}
+.acts{display:flex;gap:6px;margin-top:auto;padding-top:2px;flex-wrap:wrap}
+.btn{
+  background:var(--panel2);border:1px solid var(--line);color:var(--dim);
+  padding:5px 10px;border-radius:6px;font-size:11.5px;cursor:pointer;font-family:inherit;
+}
+.btn:hover{color:var(--txt);border-color:var(--dim2)}
+.btn.p{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn.p:hover{opacity:.88;color:#fff}
+.btn.k{border-color:#3d4a63;color:var(--accent2)}
+.rows{display:flex;flex-direction:column;gap:5px}
+.row{display:flex;gap:9px;font-size:11.5px;align-items:baseline;border-bottom:1px dashed #232936;padding-bottom:5px}
+.row:last-child{border:0}
+.row code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:var(--accent2);font-size:10.5px;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap;flex:0 0 auto;cursor:pointer}
+.row span{color:var(--dim)}
+
+/* ---------- 配方坞 ----------
+   关键约束：dock 必须在 .main 的 flex 流内（flex:0 0 auto），
+   绝不能用 position:fixed —— 固定定位会脱离文档流盖住最后一排卡片。
+   .body 是 flex:1 + overflow-y:auto，会自动把剩余空间让给 dock，
+   所以坞高度变化时不需要任何 padding 补偿。 */
+.dock{
+  flex:0 0 auto;background:var(--panel);border-top:1px solid var(--line);
+  padding:10px 22px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+}
+.dock .lbl{font-size:11.5px;color:var(--dim2);white-space:nowrap;flex:0 0 auto}
+/* 配方很多时横向滚动，不换行 —— 换行会把坞撑到十几行高，把内容区挤没 */
+.dock .items{display:flex;gap:6px;flex:1 1 0;min-width:0;min-height:26px;align-items:center;overflow-x:auto;overflow-y:hidden;padding-bottom:2px}
+.dock .it{background:var(--panel3);border:1px solid #3a4354;color:var(--txt);font-size:11px;padding:2.5px 8px;border-radius:14px;display:flex;gap:6px;align-items:center;white-space:nowrap;flex:0 0 auto}
+.dock .it b{cursor:pointer;color:var(--dim2);font-weight:400}
+.dock .it b:hover{color:#f87171}
+/* 空态提示用绝对定位，不占 flex 空间（否则 overflow-x 会把它挤出可视区） */
+.dock.empty .items{position:relative}
+.dock.empty .items::after{content:"点卡片上的「加入配方」把词混在一起";position:absolute;left:0;top:50%;transform:translateY(-50%);font-size:11.5px;color:var(--dim2);pointer-events:none}
+.empty-hide{display:none}
+.empty{text-align:center;color:var(--dim2);padding:60px 0;font-size:13px}
+
+.toast{
+  position:fixed;left:50%;bottom:76px;transform:translateX(-50%) translateY(8px);
+  background:var(--accent);color:#fff;padding:8px 16px;border-radius:20px;font-size:12.5px;
+  opacity:0;pointer-events:none;transition:.22s;z-index:99;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:860px){
+  .side{position:fixed;z-index:30;height:100%;transform:translateX(-100%);transition:.2s}
+  .side.open{transform:none}
+  /* 配方坞已改为 .main 内的 flex 行，不再需要 left:0 补偿 */
+  .menu{display:inline-block !important}
+  .top,.filters,.body,.dock{padding-left:14px;padding-right:14px}
+}
+.menu{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand">
+      <h1>动漫<span>提示词库</span></h1>
+      <p>ANIME PROMPT LIBRARY</p>
+    </div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+
+  <div class="main">
+    <div class="top">
+      <button class="btn menu" id="btnMenu">☰ 目录</button>
+      <input class="search" id="q" placeholder="搜索：画风 / 作品名 / 关键词（支持中英文）…" autocomplete="off">
+      <span class="stat" id="stat"></span>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="body" id="body"><div class="grid" id="grid"></div></div>
+
+    <!-- 配方坞：必须是 .main 的最后一个 flex 子项。
+         早前它是 .app 的兄弟节点 + position:fixed，完全脱离文档流，
+         会盖住最后一排卡片；靠 body 的 padding-bottom 补也补不齐 ——
+         坞的高度随配方数量变长，padding 是死的。 -->
+    <div class="dock empty" id="dock">
+      <span class="lbl">配方</span>
+      <div class="items" id="recItems"></div>
+      <button class="btn" id="btnBuild">合成 Prompt</button>
+      <button class="btn k" id="btnCopyAll">复制</button>
+      <button class="btn" id="btnClear">清空</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/data-core.js"></script>
+<script src="assets/data-core-more.js"></script>
+<script src="assets/data-styles-en.js"></script>
+<script src="assets/data-studio-alias.js"></script>
+<script src="assets/prompt-kit.js"></script>
+<script src="assets/data-genres.js"></script>
+<script src="assets/data-works-jp.js"></script>
+<script src="assets/data-works-global.js"></script>
+<script src="assets/data-works-more-a.js"></script>
+<script src="assets/data-works-eur-w.js"></script>
+<script src="assets/data-works-eur-e.js"></script>
+<script src="assets/data-works-namer.js"></script>
+<script src="assets/data-misc.js"></script>
+<script src="assets/data-layout.js"></script>
+<script src="assets/data-palette.js"></script>
+<script src="assets/data-prompts-st1.js"></script>
+<script src="assets/data-prompts-st2.js"></script>
+<script src="assets/data-prompts-st3.js"></script>
+<script src="assets/data-prompts-gn1.js"></script>
+<script src="assets/data-prompts-gn2.js"></script>
+<script src="assets/data-prompts-jp1.js"></script>
+<script src="assets/data-prompts-jp2.js"></script>
+<script src="assets/data-prompts-jp3.js"></script>
+<script src="assets/data-prompts-jp4.js"></script>
+<script src="assets/data-prompts-cn1.js"></script>
+<script src="assets/data-prompts-ww1.js"></script>
+<script src="assets/data-prompts-gk1.js"></script>
+<script src="assets/data-prompts-if1.js"></script>
+<script src="assets/data-prompts-fr1.js"></script>
+<script src="assets/data-prompts-ln1.js"></script>
+<script src="assets/data-prompts-zh-st1.js"></script>
+<script src="assets/data-prompts-zh-st2.js"></script>
+<script src="assets/data-prompts-zh-st3.js"></script>
+<script src="assets/data-prompts-zh-gn1.js"></script>
+<script src="assets/data-prompts-zh-gn2.js"></script>
+<script src="assets/prompts-zh.js"></script>
+<script src="assets/prompts.js"></script>
+
+<!-- 开放式知识库：元模型 + 十二库 + 引擎 + 界面 -->
+<script src="assets/schema.js"></script>
+<script src="assets/lib-form.js"></script>
+<script src="assets/lib-visual.js"></script>
+<script src="assets/lib-visual2.js"></script>
+<script src="assets/lib-creature.js"></script>
+<script src="assets/lib-creature2.js"></script>
+<script src="assets/lib-creature3.js"></script>
+<script src="assets/lib-world.js"></script>
+<script src="assets/lib-world2.js"></script>
+<script src="assets/lib-story.js"></script>
+<script src="assets/lib-lens.js"></script>
+<script src="assets/lib-voice.js"></script>
+<script src="assets/lib-prod.js"></script>
+<script src="assets/lib-morph.js"></script>
+<script src="assets/lib-retrieve.js"></script>
+<script src="assets/codes.js"></script>
+<script src="assets/code-map.js"></script>
+<script src="assets/rights.js"></script>
+<script src="assets/resolver.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/examples.js"></script>
+<script src="assets/studio.js"></script>
+<script src="assets/render.js"></script>
+<!-- 请求执行层：单张出图与抽卡共用一份。
+     分成两份的话限流退避只会修在其中一边，
+     表现成「单张能出、抽卡就 402」，而两段代码看起来几乎一样。
+     必须在 studio-ui / gacha-ui 之前：它们调 RENDER_NET。 -->
+<script src="assets/render-net.js"></script>
+<!-- 抽卡池：槽位从 STUDIO.STEPS 派生，规模现算不缓存。
+     库补了内容，这里不用改。 -->
+<script src="assets/gacha.js"></script>
+<!-- 按模型改写提示词：同一组四步给五个模型五份词。
+     必须在 studio-ui 之前（界面只渲染，不做改写），
+     且在 studio.js 之后 —— 它从 STUDIO 取料。 -->
+<script src="assets/model-prompts.js"></script>
+<script src="assets/studio-ui.js"></script>
+<script src="assets/gacha-ui.js"></script>
+<script src="assets/open-ui.js"></script>
+<script src="assets/code-ui.js"></script>
+<script>
+/* ============ 数据整合 ============ */
+const WORKS = [].concat(
+  WORKS_JP || [], WORKS_GLOBAL || [],
+  WORKS_MORE_A || [], WORKS_EUR_W || [], WORKS_EUR_E || [], WORKS_NAMER || []
+);
+
+/* 把已有条目注册进开放式知识库引擎，检索时才能命中「可直接复制」的提示词卡。
+   注意：只注册 STYLES，不要再注册 STYLES_MORE ——
+   data-core-more.js 末尾已有 STYLES.push(...STYLES_MORE)，浏览器里 STYLES 本身就是全量 59 条，
+   再注册一次会让 A5 全球流派 14 条在引擎里出现两遍。 */
+ENGINE.register(STYLES, "styles", "画风流派");
+ENGINE.register(WORKS, "works", "作品 IP");
+ENGINE.register(GENRES, "genres", "题材元素");
+/* 排版与配色也要注册。漏掉的话页面照样开、其它视图照样正常，
+   只有出图工作流的版式栏与配色栏是空的——而且不报错。 */
+ENGINE.register(LAYOUTS, "layouts", "排版图型");
+ENGINE.register(PALETTES, "palettes", "主题配色");
+
+/* ---------- 码表 ----------
+   codes.js → resolver.js 已在前面加载；registry.js 在全部数据之后加载并执行 boot()。
+   登记完成后 CODES / RESOLVER 两个全局即可用。 */
+
+/* 提示词卡：把各批文件按 id 汇总成查表字典 */
+const PROMPT_MAP = (function(){
+  const m = new Map();
+  (typeof PROMPT_SETS !== "undefined" ? PROMPT_SETS : []).forEach(set=>{
+    set.forEach(p=>m.set(p.id, p.gpt));
+  });
+  return m;
+})();
+
+/* 生成一张提示词卡的 HTML（GPT 正文 + 标签版 + 负面词） */
+function promptCard(d, sec){
+  const gpt = PROMPT_MAP.get(d.id);
+  if(!gpt) return "";
+  const c = PROMPT_KIT.buildCard(d, sec.key, gpt);
+  return `<div class="pcard">
+    <div class="phead"><span>GPT 出图提示词 · 整段复制</span>
+      <span class="tier" title="${esc("判定依据：" + c.tierHit + "\n" + c.tierMeta.note)}">${esc(c.tierMeta.zh)}档</span>
+      <button class="btn p" data-cp="${esc(c.gpt)}">复制正文</button></div>
+    <div class="pbody">${esc(c.gpt)}</div>
+    <details><summary>展开标签版（MJ / SD / Flux）与负面词</summary>
+      <div class="psub"><i>依据</i><b>${esc(c.tierHit)} → ${esc(c.tierMeta.zh)}档。${esc(c.tierMeta.note)}</b></div>
+      <div class="psub"><i>条目词</i><b>${esc((d.kw||[]).join(", "))}</b></div>
+      <div class="psub"><i>档位收尾</i><b>${esc(c.tierMeta.quality)}</b></div>
+      <div class="psub"><i>标签全量</i><b data-cp="${esc(c.tags)}" style="cursor:pointer">${esc(c.tags)}</b></div>
+      <div class="psub"><i>负面全量</i><b data-cp="${esc(c.neg)}" style="cursor:pointer">${esc(c.neg)}</b></div>
+    </details>
+  </div>`;
+}
+
+const SECTIONS = [
+  { key:"styles", name:"画风流派", color:"#7c5cff", data:STYLES, facet:d=>d.cat, search:d=>[d.zh,d.en,d.id,codeOf(d.id)].concat(d.kw||[]).join(" ") },
+  { key:"works",  name:"作品 IP",  color:"#22d3ee", data:WORKS,  facet:d=>d.grp, search:d=>[d.zh,d.romaji,d.studio,d.grp,String(d.year),d.id,codeOf(d.id)].concat(d.kw||[]).join(" ") },
+  { key:"genres", name:"题材元素", color:"#34d399", data:GENRES, facet:d=>d.cat, search:d=>[d.zh,d.en,d.id,codeOf(d.id)].concat(d.kw||[]).join(" ") },
+  { key:"vocab",  name:"词条库",   color:"#fbbf24", data:VOCAB,  facet:()=>"", noFacet:true,
+    search:d=>[d.zh,d.en,d.id,codeOf(d.id)].concat((d.items||[]).map(i=>i.t+" "+i.c)).join(" ") },
+  { key:"tpl",    name:"模板 · 负面 · 语法", color:"#f472b6", data:[], facet:()=>"", noFacet:true, search:()=>"" }
+];
+
+const subCfg = {
+  tpl:{ key:"tpl", name:"模板 · 负面 · 语法", data:[], facet:()=>"", noFacet:true, search:()=>"" },
+  templates:{ key:"templates", name:"组合模板", data:TEMPLATES, facet:()=>"", noFacet:true,
+    hint:"按用途给出提示词骨架：填空位置、负向词、推荐参数",
+    search:d=>[d.zh,d.en,d.use,d.id,d.pos].join(" ") },
+  negatives:{ key:"negatives", name:"负面提示词", data:NEGATIVES, facet:()=>"", noFacet:true,
+    hint:"按用途分组的通用负面词库。画风/作品/题材三层的每张卡片已按画质档自动附带对应的通用负面词；这里是按场景挑选与调整的手册，两者不重复",
+    search:d=>[d.zh,d.scene,d.id,codeOf(d.id)].concat(d.kw||[]).join(" ") },
+  syntax:{ key:"syntax", name:"平台语法", data:SYNTAX, facet:()=>"", noFacet:true,
+    hint:"各平台的权重语法与参数差异。卡片输出的是通用成品，搬到 MJ / SD / Flux 时需要来这里对照改写",
+    search:d=>[d.zh,d.en,d.features,d.weight,d.param,d.tip,d.id,codeOf(d.id)].join(" ") }
+};
+SECTIONS.push(subCfg.tpl);
+SECTIONS.push(subCfg.templates, subCfg.negatives, subCfg.syntax);
+const TOOL_KEYS = ["templates","negatives","syntax"];
+
+/* ============ 状态 ============ */
+/* 首屏落在示例画廊，而不是技法板块。
+   技法板块是 59 行纯文字描述，新用户看不出这套词能出图；
+   画廊第一屏就是真图，结论先立住，再决定往哪走。 */
+const state = { sec:"opengallery", facet:"全部", q:"", recipe:[] };
+const el = id => document.getElementById(id);
+
+/* ============ 工具 ============ */
+function copy(text){
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).catch(()=>fallback(text));
+  } else fallback(text);
+  toast("已复制");
+}
+function fallback(t){
+  const ta=document.createElement("textarea");
+  ta.value=t; ta.style.position="fixed"; ta.style.left="-9999px";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); }catch(e){}
+  document.body.removeChild(ta);
+}
+let tt;
+function toast(msg){
+  const t=el("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1400);
+}
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ============ 导航 ============ */
+/* 侧栏最上面这三个入口不能埋在第三组里。
+   顺序就是使用顺序：**示例画廊 → 出图工作流 → 一键抽卡**。
+   画廊第一：它是唯一带图的入口，先看到「这套词真能出图」，
+   再决定是照着调（工作流）还是随手试（抽卡）。
+   工作流第二：要出图的人直奔它，抽卡是「还没想好」的备选路径。 */
+const TOP_KEYS = ["opengallery","openstudio","opengacha"];
+
+/* 切板块的唯一入口。
+   各视图（抽卡、画廊、工作流）之间要互相跳转，
+   各自手写 state.sec + buildNav + buildFilters + render 的话，
+   漏掉 buildFilters 会让筛选条停在上一屏的 chip 上——
+   而那一屏本来没有筛选条，看起来像「筛选没生效」。
+   所以只留这一个函数，谁要跳都调它。 */
+function goSec(key){
+  state.sec = key; state.facet = "全部";
+  buildNav(); buildFilters(); render();
+  el("side").classList.remove("open");
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+function buildNav(){
+  // 三个实战工具板块已经 push 进 SECTIONS，这里只渲染一次；
+  // 早前它们同时出现在「库结构」和「实战工具」两组里，侧栏会列出 6 个重复入口。
+  let html = '<div class="grp">从这里开始</div>';
+  TOP_KEYS.forEach(k=>{
+    const v = OPEN_VIEWS.find(x=>x.key===k);
+    if(!v) return;                       // OPEN_VIEWS 里删了项也不至于渲染出空按钮
+    html += `<button data-sec="${v.key}" class="${state.sec===v.key?"on":""}" title="${esc(v.desc||"")}">${esc(v.name)}</button>`;
+  });
+  html += '<div class="grp">库结构</div>';
+  SECTIONS.filter(s=>s.key!=="tpl" && !TOOL_KEYS.includes(s.key)).forEach(s=>{
+    html += `<button data-sec="${s.key}" class="${state.sec===s.key?"on":""}">${esc(s.name)}<span class="n">${s.data.length}</span></button>`;
+  });
+  html += '<div class="grp">实战工具</div>';
+  TOOL_KEYS.forEach(k=>{
+    const s=subCfg[k];
+    html += `<button data-sec="${k}" class="${state.sec===k?"on":""}">${esc(s.name)}<span class="n">${s.data.length}</span></button>`;
+  });
+  html += '<div class="grp">开放式知识库</div>';
+  /* TOP_KEYS 已经单独提到顶部了，这里必须排除掉，
+     否则同一个入口会在侧栏出现两次 —— 而重复入口点哪一份都不奇怪，
+     用户会以为是两个不同的功能。 */
+  OPEN_VIEWS.filter(v=>!TOP_KEYS.includes(v.key)).forEach(v=>{
+    const n = v.key==="openlibs" ? ENGINE.NODES.length : "";
+    html += `<button data-sec="${v.key}" class="${state.sec===v.key?"on":""}">${esc(v.name)}${n?`<span class="n">${n}</span>`:""}</button>`;
+  });
+  el("nav").innerHTML = html;
+  el("nav").querySelectorAll("button").forEach(b=>{
+    b.onclick = ()=>goSec(b.dataset.sec);
+  });
+}
+
+function curSection(){ return SECTIONS.find(s=>s.key===state.sec); }
+
+/* ============ 筛选条 ============ */
+function buildFilters(){
+  const box=el("filters");
+  // 开放式知识库的四个视图不在 SECTIONS 里，curSection() 会返回 undefined。
+  // 这里必须提前拦掉，否则 sec.noFacet 抛异常会打断整个点击链，视图永远空白。
+  if(openDispatch.isOpen && openDispatch.isOpen()){ box.innerHTML=""; return; }
+  const sec=curSection();
+  if(!sec || state.sec==="tpl"){ box.innerHTML=""; return; }
+  if(sec.hint){
+    box.innerHTML = `<span class="sechint">${esc(sec.hint)}</span>`;
+    return;
+  }
+  if(sec.noFacet){ box.innerHTML=""; return; }
+  let facets;
+  if(sec.key==="works"){
+    const order=["国产经典","国产动画电影","国产番剧","国产三维","欧美动画","二次元游戏","日本·1970-80年代","日本·1990年代","日本·2000年代","日本·2010年代","日本·2020年代","日本·剧场版"];
+    facets=["全部"].concat(order.filter(x=>sec.data.some(d=>d.grp===x)));
+  } else if(sec.key==="negatives"){
+    facets=["全部"];
+  } else {
+    facets=["全部"].concat([...new Set(sec.data.map(sec.facet))].filter(Boolean));
+  }
+  box.innerHTML = facets.map(f=>`<button class="chip ${state.facet===f?"on":""}" data-f="${esc(f)}">${esc(f)}</button>`).join("");
+  box.querySelectorAll(".chip").forEach(c=>{
+    c.onclick=()=>{ state.facet=c.dataset.f; buildFilters(); render(); };
+  });
+}
+
+/* ============ 渲染 ============ */
+function render(){
+  if(openDispatch()) return;              // 开放式知识库的四个视图
+  const sec=curSection();
+  if(!sec) return;
+  let list = sec.data;
+  const q = state.q.trim().toLowerCase();
+
+  if(state.sec==="tpl"){
+    el("grid").innerHTML = `<div class="empty" style="grid-column:1/-1">请在右侧「实战工具」中选择模板、负面提示词或平台语法</div>`;
+    updateStat(0,0); return;
+  }
+
+  if(q){
+    const all = [];
+    SECTIONS.filter(s=>s.data.length).forEach(s=>{
+      s.data.forEach(d=>{ if(s.search(d).toLowerCase().includes(q)) all.push({s,d}); });
+    });
+    if(!all.length){ el("grid").innerHTML=`<div class="empty" style="grid-column:1/-1">没有匹配「${esc(state.q)}」的条目</div>`; updateStat(0,0); return; }
+    updateStat(all.length, all.length);
+    el("grid").innerHTML = all.map(x=>card(x.d,x.s)).join("");
+    bindCards(); return;
+  }
+
+  if(state.sec==="works"){
+    if(state.facet!=="全部") list = list.filter(d=>d.grp===state.facet);
+    list = [...list].sort((a,b)=>a.year-b.year);
+  } else if(state.sec==="negatives" || state.sec==="vocab" || state.sec==="templates" || state.sec==="syntax"){
+    // 保持原顺序
+  } else if(state.facet!=="全部"){
+    list = list.filter(d=>sec.facet(d)===state.facet);
+  }
+
+  updateStat(list.length, sec.data.length);
+  el("grid").innerHTML = list.map(d=>card(d,sec)).join("");
+  bindCards();
+}
+
+function updateStat(n,total){
+  const idx = SECTIONS.reduce((a,s)=>a+s.data.length,0);
+  el("stat").innerHTML = state.q ? `找到 <b>${n}</b> 条` : `显示 <b>${n}</b> / ${total} 条 · 全库 <b>${idx}</b> 条`;
+}
+
+/* 旧 id → 规范编码。码表不可用时返回空串，
+   调用方决定是回退显示旧 id 还是跳过。 */
+function codeOf(id){
+  return (typeof CODES !== "undefined" && CODES.OLD_OF[id]) || "";
+}
+
+/* 卡片右上角的编码区：规范编码 + 旧 ID，都可点复制。
+   规范编码放在前面，因为它才是引用时该用的那个；
+   旧 ID 保留是为了和历史文档、提示词正文里的写法对上。 */
+function codeChipHtml(d){
+  const code = codeOf(d.id);
+  if(!code) return `<span class="cid">${esc(d.id)}</span>`;
+  return `<div class="cidbox">
+    <span class="code" data-cp="${esc(code)}" title="点击复制规范编码">${esc(code)}</span>
+    <span class="oldid" title="历史 ID，保留用于对照旧文档">${esc(d.id)}</span>
+  </div>`;
+}
+
+/* ---------- 授权徽章 ----------
+   等级只在 registry.boot() 时算一次并存在 RESOLVER 里，UI 只读不重算。
+   这里是首次 render() 早于登记的那一版，RIGHTS/resolver 未就绪时返回空，
+   首屏卡片不带徽章；登记完会整体重渲染一次（见文件末尾），徽章才出现。 */
+function rightsOf(id){
+  if(typeof RESOLVER === "undefined" || !RESOLVER.index) return null;
+  /* 索引键全部经过 resolver 的 norm() 归一（转小写），
+     而数据里的 id 是 A1-01 这种大写形态。
+     直接按原样查会一路落空 —— 表现就是「徽章一个都没有」，
+     不报错，所以容易被当成数据缺失。 */
+  const ix = RESOLVER.index.byOld;
+  const hit = ix[id] || ix[String(id).toLowerCase()];
+  if(!hit || !hit.length) return null;
+  const e = hit.find(x=>x.rights) || hit[0];
+  return e.rights || null;
+}
+/* R3 不是禁用，是「不能原样送进商业流程」。措辞按这个口径写，
+   写成「禁止使用」会让人以为条目作废，反而看不出该怎么用。 */
+function rightsNoteZh(tier, r){
+  const t = (typeof RIGHTS!=="undefined") ? RIGHTS.TIERS[tier] : null;
+  if(!t) return "";
+  if(tier==="R1") return "已故作者，风格已进公有领域。商用请署名原作作者。";
+  if(tier==="R2") return "含在世创作者 / 工作室 / 品牌名。可研究，商用出图前必须先去掉标识。";
+  return "受保护的作品名与角色设定。个人研究随便用；商业交付必须先去标识化改写。";
+}
+/* 返回 {badge, note} 两段而不是拼好的 HTML：
+   徽章要塞进右上角窄列，提示语要占满整行，位置不同。
+   靠 split 字符串再拼回去很容易在改文案时悄悄断掉。 */
+function rightsParts(d){
+  const empty = { badge:"", note:"" };
+  const r = rightsOf(d.id);
+  if(!r || !r.tier) return empty;
+  const tier = r.tier;
+  const t = (typeof RIGHTS!=="undefined") ? RIGHTS.TIERS[tier] : null;
+  const zh  = t ? t.zh : "自由";
+  const basis = r.basis==="layer" ? "依据：作品条目本身即受保护标识"
+    : (r.hits && r.hits.length ? "命中：" + r.hits.map(h=>h.zh||h.marker).join("、")
+                                : "依据：仅含通用技法与客观描述");
+  const tip = (t ? t.rule + "\n" + basis + "\n商用要求：" + t.requirement : basis);
+  return {
+    badge: `<div class="rid"><span class="rt rt-${esc(tier)}" title="${esc(tip)}">${esc(tier)} ${esc(zh)}</span></div>`,
+    note: tier==="R0" ? ""
+        : `<div class="rnote${tier==="R2"?" warn":""}">${esc(rightsNoteZh(tier, r))}</div>`
+  };
+}
+
+function card(d, sec){
+  const inRec = state.recipe.some(r=>r.id===d.id);
+  let kwHtml="", demoHtml="", metaHtml="", descHtml="", noteHtml="", acts="", pHtml="";
+
+  if(sec.key==="styles"){
+    metaHtml = `<div class="meta"><span>${esc(d.cat)}</span><span>${esc(d.id)}</span></div>`;
+    descHtml = `<div class="desc">${esc(d.desc)}</div>`;
+    if(d.note) noteHtml = `<div class="note">💡 ${esc(d.note)}</div>`;
+    kwHtml = `<div class="kws">${(d.kw||[]).map(k=>`<span class="kw" data-cp="${esc(k)}" title="点击复制单词">${esc(k)}</span>`).join("")}</div>`;
+    demoHtml = `<div class="demo">${esc(d.demo)}</div>`;
+    pHtml = promptCard(d, sec);
+    acts = btnActions(d, d.kw.join(", "), d.demo, inRec);
+  }
+  else if(sec.key==="works"){
+    metaHtml = `<div class="meta"><span>${esc(d.grp)}</span><span>${esc(d.year)}</span><span>${esc(d.studio)}</span></div>`;
+    descHtml = `<div class="desc">${esc(d.desc)}</div>`;
+    kwHtml = `<div class="kws">${(d.kw||[]).map(k=>`<span class="kw" data-cp="${esc(k)}" title="点击复制单词">${esc(k)}</span>`).join("")}</div>`;
+    demoHtml = `<div class="demo">${esc(d.demo)}</div>`;
+    pHtml = promptCard(d, sec);
+    acts = btnActions(d, d.kw.join(", "), d.demo, inRec);
+  }
+  else if(sec.key==="genres"){
+    metaHtml = `<div class="meta"><span>${esc(d.cat)}</span><span>${esc(d.en)}</span></div>`;
+    descHtml = `<div class="desc">${esc(d.desc)}</div>`;
+    if(d.scene) descHtml += `<div class="desc" style="margin-top:6px;color:#7f8aa0"><b style="color:#8b93a8">构图场景：</b>${esc(d.scene)}</div>`;
+    kwHtml = `<div class="kws">${(d.kw||[]).map(k=>`<span class="kw" data-cp="${esc(k)}" title="点击复制单词">${esc(k)}</span>`).join("")}</div>`;
+    demoHtml = `<div class="demo">${esc(d.demo)}</div>`;
+    pHtml = promptCard(d, sec);
+    acts = btnActions(d, d.kw.join(", "), d.demo, inRec);
+  }
+  else if(sec.key==="vocab"){
+    metaHtml = `<div class="meta"><span>${esc(d.en)}</span><span>${(d.items||[]).length} 词</span></div>`;
+    kwHtml = `<div class="rows">${(d.items||[]).map(i=>`<div class="row"><code data-cp="${esc(i.t)}" title="点击复制">${esc(i.t)}</code><span>${esc(i.c)}</span></div>`).join("")}</div>`;
+    acts = btnActions(d, (d.items||[]).map(i=>i.t).join(", "), "", inRec);
+  }
+  else if(sec.key==="templates"){
+    metaHtml = `<div class="meta"><span>${esc(d.use)}</span></div>`;
+    descHtml = `<div class="desc">${esc(d.tip)}</div>`;
+    demoHtml = `<div class="demo"><b style="color:#7c5cff">正向</b> ${esc(d.pos)}</div>`
+             + `<div class="demo" style="margin-top:5px"><b style="color:#f472b6">负向</b> ${esc(d.neg||"")}</div>`
+             + `<div class="demo" style="margin-top:5px"><b style="color:#22d3ee">参数</b> ${esc(d.params||"")}</div>`;
+    acts = `<button class="btn" data-pos="${esc(d.pos)}">复制正向</button>
+            <button class="btn" data-neg="${esc(d.neg||"")}">复制负向</button>`;
+  }
+  else if(sec.key==="negatives"){
+    metaHtml = `<div class="meta"><span>${esc(d.scene)}</span></div>`;
+    if(d.note) descHtml = `<div class="desc">${esc(d.note)}</div>`;
+    demoHtml = `<div class="demo">${esc((d.kw||[]).join(", "))}</div>`;
+    acts = `<button class="btn k" data-neg="${esc((d.kw||[]).join(", "))}">复制负面词</button>`;
+  }
+  else if(sec.key==="syntax"){
+    metaHtml = `<div class="meta"><span>${esc(d.en)}</span></div>`;
+    descHtml = `<div class="desc">${esc(d.features)}</div>`;
+    demoHtml = `<div class="demo"><b style="color:#7c5cff">权重</b> ${esc(d.weight)}</div>`
+             + `<div class="demo" style="margin-top:5px"><b style="color:#22d3ee">参数</b> ${esc(d.param)}</div>`;
+    if(d.tip) demoHtml += `<div class="note" style="margin-top:6px;color:#fbbf24;border-color:#fbbf24;background:rgba(251,191,36,.07)">💡 ${esc(d.tip)}</div>`;
+    acts = `<button class="btn k" data-pos="${esc(d.weight+"\n"+d.param)}">复制语法要点</button>`;
+  }
+
+  const sub = (sec.key==="works") ? d.romaji : (d.en||"");
+  /* 徽章进 .cid 容器：那里已经是 flex-end 对齐的窄列，
+     授权等级紧跟在规范编码下面，和「这条东西归谁、能不能商用」读成一组。
+     R3 的提示语仍然单独占一整行，不塞进窄列里挤成竖排。 */
+  const rp = rightsParts(d);
+  return `<div class="card ${inRec?"hi":""}">
+    <div class="chead">
+      <div class="ctitle">${esc(d.zh)}<i>${esc(sub)}</i></div>
+      <div class="cid">${codeChipHtml(d)}${rp.badge}</div>
+    </div>
+    ${rp.note}${metaHtml}${descHtml}${noteHtml}${pHtml}${kwHtml}${demoHtml}
+    <div class="acts">${acts}</div>
+  </div>`;
+}
+
+function btnActions(d, kwStr, demo, inRec){
+  return `<button class="btn p" data-add="${d.id}">${inRec?"✓ 已在配方":"＋ 加入配方"}</button>
+          <button class="btn" data-pos="${esc(kwStr)}">复制关键词</button>
+          ${demo?`<button class="btn" data-pos2="${esc(demo)}">复制示例</button>`:""}`;
+}
+
+function bindCards(){
+  el("grid").querySelectorAll("[data-add]").forEach(b=>{
+    b.onclick=()=>{
+      const id=b.dataset.add;
+      const i=state.recipe.findIndex(r=>r.id===id);
+      if(i>=0){ state.recipe.splice(i,1); toast("已从配方移除"); }
+      else{
+        const all=SECTIONS.flatMap(s=>s.data);
+        const d=all.find(x=>x.id===id);
+        if(!d) return;
+        let kw = d.kw || (d.items?d.items.map(x=>x.t):[]) || (d.pos?[d.pos]:[]);
+        state.recipe.push({id, zh:d.zh, kw});
+        toast("已加入配方："+d.zh);
+      }
+      render(); renderRecipe();
+    };
+  });
+  el("grid").querySelectorAll("[data-cp]").forEach(b=>{ b.onclick=()=>copy(b.dataset.cp); });
+  el("grid").querySelectorAll("[data-pos]").forEach(b=>{ b.onclick=()=>copy(b.dataset.pos); });
+  el("grid").querySelectorAll("[data-pos2]").forEach(b=>{ b.onclick=()=>copy(b.dataset.pos2); });
+  el("grid").querySelectorAll("[data-neg]").forEach(b=>{ b.onclick=()=>copy(b.dataset.neg); });
+}
+
+/* ============ 配方坞 ============ */
+function renderRecipe(){
+  const d=el("dock");
+  d.classList.toggle("empty", state.recipe.length===0);
+  el("recItems").innerHTML = state.recipe.map((r,i)=>
+    `<span class="it">${esc(r.zh)}<b data-rm="${i}" title="移除">×</b></span>`).join("");
+  el("recItems").querySelectorAll("[data-rm]").forEach(b=>{
+    b.onclick=()=>{ state.recipe.splice(+b.dataset.rm,1); render(); renderRecipe(); };
+  });
+  ["btnBuild","btnCopyAll","btnClear"].forEach(id=>el(id).classList.toggle("empty-hide", state.recipe.length===0));
+}
+function buildPrompt(){
+  const order={genres:0, works:1, styles:2, vocab:3};
+  const secOf = id => (SECTIONS.find(s=>s.data.some(d=>d.id===id))||{key:""}).key;
+  const sorted=[...state.recipe].sort((a,b)=>(order[secOf(a.id)]??9)-(order[secOf(b.id)]??9));
+  const parts=sorted.map(r=>r.kw.join(", ")).filter(Boolean);
+  const tail="masterpiece, best quality, high resolution";
+  return parts.join(", ")+", "+tail;
+}
+
+el("btnBuild").onclick=()=>{
+  if(!state.recipe.length){ toast("配方是空的"); return; }
+  const p=buildPrompt();
+  const box=document.createElement("div");
+  box.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;z-index:200;padding:24px";
+  box.innerHTML=`<div style="background:#161922;border:1px solid #2b3240;border-radius:12px;max-width:720px;width:100%;padding:20px">
+    <div style="font-size:14px;font-weight:600;margin-bottom:12px">合成结果</div>
+    <textarea id="__out" style="width:100%;height:180px;background:#0b0d12;border:1px solid #2b3240;border-radius:8px;color:#c9d1de;padding:12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;outline:none;resize:vertical">${esc(p)}</textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button class="btn" id="__close">关闭</button>
+      <button class="btn p" id="__copy">复制全部</button>
+    </div></div>`;
+  document.body.appendChild(box);
+  document.getElementById("__close").onclick=()=>box.remove();
+  box.onclick=e=>{ if(e.target===box) box.remove(); };
+  document.getElementById("__copy").onclick=()=>{ copy(document.getElementById("__out").value); };
+};
+el("btnCopyAll").onclick=()=>{ if(state.recipe.length) copy(buildPrompt()); };
+el("btnClear").onclick=()=>{ state.recipe=[]; render(); renderRecipe(); toast("已清空"); };
+el("btnMenu").onclick=()=>el("side").classList.toggle("open");
+
+let tmr;
+el("q").addEventListener("input",e=>{
+  clearTimeout(tmr);
+  tmr=setTimeout(()=>{
+    // 在开放式知识库视图下，顶部搜索直接驱动「统一检索」
+    if(String(state.sec).indexOf("open")===0){
+      OP.findQ = e.target.value; state.sec="openfind"; buildNav(); render(); return;
+    }
+    state.q=e.target.value; render();
+  },160);
+});
+
+/* ============ 启动 ============ */
+buildNav(); buildFilters(); render(); renderRecipe();
+
+document.addEventListener("click",e=>{
+  if(window.innerWidth<=860 && el("side").classList.contains("open") && !e.target.closest("#side") && !e.target.closest("#btnMenu"))
+    el("side").classList.remove("open");
+});
+</script>
+<!-- 码表登记：必须最后加载。它依赖上面内联合并好的 WORKS / STYLES / GENRES，
+     以及全部 lib-* 节点数据，所以放在所有脚本之后。
+     登记后任何一项都能用「规范编码」或「中文名」直接引用与组合。 -->
+<script src="assets/registry.js"></script>
+<script>
+/* 数据与依赖都显式传入：
+   registry 不猜全局名，也不 eval——严格 CSP 下 eval 会被拦，
+   届时登记会静默失败，表现为「码表空着但没有报错」。
+   CODE_MAP 是编码迁移表：让已发布的旧码（W-J-001、A1-001）
+   在新段码体系下依然能解析。 */
+var REG = REGISTRY.boot({
+  CODES: CODES, RESOLVER: RESOLVER, ENGINE: ENGINE, CODE_MAP: CODE_MAP, RIGHTS: RIGHTS,
+  data: {
+    entries: [].concat(STYLES, WORKS, GENRES, LAYOUTS, PALETTES),
+    tools:   [].concat(TEMPLATES, NEGATIVES, SYNTAX)
+  }
+});
+console.log("[码表] 已登记 " + REG.registers + " 项：条目 " + REG.entries
+  + " / 工具 " + REG.tools + " / 节点 " + REG.nodes
+  + "（其中作品 " + REG.works + " 条并入 WK 段）");
+console.log("[授权] R0 可直接商用 " + REG.rights.R0
+  + " / R1 需署名 " + REG.rights.R1
+  + " / R2 需去标识 " + REG.rights.R2
+  + " / R3 禁止直接商用 " + REG.rights.R3);
+if (REG.uncoded.length)  console.warn("[码表] 未编码项：", REG.uncoded);
+if (REG.collided.length) console.warn("[码表] 撞码项：", REG.collided);
+if (REG.missing.length)  console.warn("[码表] 未传入的数据：", REG.missing);
+
+/* 首屏卡片是在码表登记之前渲染的（那时 OLD_OF 还是空的），所以重渲染一次，
+   让每张卡片右上角都能显示规范编码。
+   不这么做的话：首次打开看不到编码，切一下板块才出现——很容易被当成 bug。 */
+if (!REG.missing.length) render();
+</script>
+</body>
+</html>

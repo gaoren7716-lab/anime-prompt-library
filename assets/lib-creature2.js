@@ -1,0 +1,71 @@
+// 05 角色与生物库（中）CB-06 ~ CB-08
+// 注意：zh / desc / path 必须是纯中文，英文只允许出现在 kw / en / alt。
+
+var LIB_CREATURE2 = [
+// ── CB-06 服装与装备 ──────────────────────────────────
+{ id:"CB-06", lib:"05", up:null, path:"角色与生物 › 服装装备", zh:"服装装备", en:"Costume and Gear", alt:["服装","服饰"],
+  desc:"服装同时承担身份、时代、地域与功能四类信息，是最高效的设定载体。" },
+{ id:"CB-06-1", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 常服", zh:"常服", en:"Casual Wear", slot:"subject",
+  kw:["casual clothes","everyday outfit","streetwear"], alt:["便服"], desc:"日常穿着，强调舒适与个人口味。" },
+{ id:"CB-06-2", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 制服", zh:"制服", en:"Uniform", slot:"subject",
+  kw:["uniform","school uniform","service uniform"], alt:["校服"], desc:"制度化着装，抹去个体差异以强调归属。" },
+{ id:"CB-06-3", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 民族服饰", zh:"民族服饰", en:"Ethnic Costume", slot:"subject",
+  kw:["traditional costume","folk garment","regional dress"], alt:["传统服饰"],
+  desc:"⚠ 需确认具体文化来源与场合，避免把仪式服饰当作日常装。" },
+{ id:"CB-06-4", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 甲胄与战斗装", zh:"甲胄与战斗装", en:"Armor", slot:"subject",
+  kw:["armor","plate armor","battle gear"], alt:["铠甲"], desc:"硬质分块包裹身体，缝隙处露出软质内衬。" },
+{ id:"CB-06-5", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 奇幻法袍", zh:"奇幻法袍", en:"Fantasy Robe", slot:"subject",
+  kw:["fantasy robe","wizard cloak","ritual garment"], alt:["长袍"], desc:"大面积垂坠布料，用褶皱走向表现体块。" },
+{ id:"CB-06-6", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 机能服饰", zh:"机能服饰", en:"Techwear", slot:"subject",
+  kw:["techwear","tactical gear","utility straps"], alt:["机能风"],
+  desc:"以绑带、口袋、模块化挂点构成，功能性压过装饰性。" },
+{ id:"CB-06-7", lib:"05", up:"CB-06", path:"角色与生物 › 服装装备 › 配件与随身物", zh:"配件与随身物", en:"Accessories", slot:"subject",
+  kw:["accessories","jewelry","personal item"], alt:["饰品"],
+  desc:"小面积高频识别物，如徽章、眼镜、武器挂饰，用来固定记忆点。" },
+
+// ── CB-07 手势与体态 ──────────────────────────────────
+{ id:"CB-07", lib:"05", up:null, path:"角色与生物 › 手势体态", zh:"手势体态", en:"Gesture and Posture", alt:["姿态","动作"],
+  desc:"姿态是情绪的第二张脸。重心、肩线、脊柱三条线的关系决定静还是动。" },
+{ id:"CB-07-1", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 站立重心", zh:"站立重心", en:"Standing Weight", slot:"subject",
+  kw:["standing pose","weight shift","contrapposto"], alt:["站姿"], desc:"重心偏向一侧，另一侧放松形成自然倾斜。" },
+{ id:"CB-07-2", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 行走动态", zh:"行走动态", en:"Walking", slot:"subject",
+  kw:["walking","mid stride","walking cycle"], alt:["走路"], desc:"四肢交替，肩与髋反向旋转。" },
+{ id:"CB-07-3", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 奔跑与冲刺", zh:"奔跑与冲刺", en:"Running", slot:"subject",
+  kw:["running","sprinting","dynamic run pose"], alt:["奔跑"], desc:"躯干前倾，四肢展开度大，衣物与头发甩出。" },
+{ id:"CB-07-4", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 坐姿与倚靠", zh:"坐姿与倚靠", en:"Sitting and Leaning", slot:"subject",
+  kw:["sitting","leaning against","relaxed slouch"], alt:["坐姿"], desc:"身体转入静止，适合表现对话与疲惫。" },
+{ id:"CB-07-5", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 战斗架势", zh:"战斗架势", en:"Combat Stance", slot:"subject",
+  kw:["combat stance","ready pose","guard position"], alt:["架势"], desc:"重心下沉，四肢形成防御或进攻的几何。" },
+{ id:"CB-07-6", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 手势语言", zh:"手势语言", en:"Hand Gesture", slot:"subject",
+  kw:["hand gesture","expressive hands","pointing hand"], alt:["手部"],
+  desc:"手部是难度最高也最出戏的部位，需单独给出状态。" },
+{ id:"CB-07-7", lib:"05", up:"CB-07", path:"角色与生物 › 手势体态 › 悬浮与失重", zh:"悬浮与失重", en:"Floating", slot:"subject",
+  kw:["floating pose","weightless","mid air"], alt:["漂浮"], desc:"四肢不受重力约束，衣物飘散，需配环境线索。" },
+
+// ── CB-08 非人角色 ────────────────────────────────────
+{ id:"CB-08", lib:"05", up:null, path:"角色与生物 › 非人角色", zh:"非人角色", en:"Non-human Character", alt:["非人类"],
+  desc:"非人不等同于怪物。多数被设计为「带人格的形象」，需保留可读的表情与比例。" },
+{ id:"CB-08-1", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 拟人格吉祥物", zh:"拟人格吉祥物", en:"Anthropomorphic Mascot", slot:"subject",
+  kw:["anthropomorphic mascot","chibi creature","costume character"], alt:["拟人化"],
+  desc:"以人类情绪表达为前提的动物或非生物外壳。" },
+{ id:"CB-08-2", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 兽人", zh:"兽人", en:"Beastfolk", slot:"subject",
+  kw:["beastfolk","kemonomimi","animal eared character"], alt:["兽耳"],
+  desc:"人形骨架上叠加动物特征，特征集中在头部与四肢末端。" },
+{ id:"CB-08-3", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 灵体与幽灵", zh:"灵体与幽灵", en:"Spirit", slot:"subject",
+  kw:["ghost","spirit entity","translucent figure"], alt:["幽灵"],
+  desc:"半透明或轮廓不稳定，与环境的边界模糊。" },
+{ id:"CB-08-4", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 神明与神话位格", zh:"神明与神话位格", en:"Deity", slot:"subject",
+  kw:["deity figure","mythological being","divine aura"], alt:["神明"],
+  desc:"⚠ 涉及具体宗教时需先确认传统出处，只借用视觉语言，不挪用神圣符号。" },
+{ id:"CB-08-5", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 妖怪与精灵", zh:"妖怪与精灵", en:"Yokai and Fairy", slot:"subject",
+  kw:["yokai","fairy","folkloric creature"], alt:["妖怪"],
+  desc:"源自地方民俗的超常存在，通常绑定特定地域与器物。" },
+{ id:"CB-08-6", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 拟人化物体", zh:"拟人化物体", en:"Object Personification", slot:"subject",
+  kw:["object personification","moe anthropomorphism","tsukumogami"], alt:["器物拟人"],
+  desc:"把用具、食物、自然物赋予人格，保留原型的结构特征。" },
+{ id:"CB-08-7", lib:"05", up:"CB-08", path:"角色与生物 › 非人角色 › 抽象概念化身", zh:"抽象概念化身", en:"Abstract Embodiment", slot:"subject",
+  kw:["embodiment","personified concept","allegorical figure"], alt:["拟神化"],
+  desc:"把时间、死亡、春天等概念做成可视角色，靠符号而非造型传意。" }
+];
+
+if (typeof module !== "undefined" && module.exports) module.exports = { LIB_CREATURE2 };

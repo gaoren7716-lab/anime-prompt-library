@@ -1,0 +1,92 @@
+// 06 世界与资产库（上）WD-01 ~ WD-04
+// 节点约定：{ id, lib, up, path, zh, en, kw, alt, desc, slot }
+// slot = "content"（可变内容）或 "style"（画面质感），容器节点不带 slot。
+// 注意：zh / desc / path 必须是纯中文，英文只允许出现在 kw / en / alt。
+
+var LIB_WORLD = [
+// ── WD-01 地形与自然 ──────────────────────────────────
+{ id:"WD-01", lib:"06", up:null, path:"世界与资产 › 地形自然", zh:"地形自然", en:"Terrain and Nature", alt:["场景"],
+  desc:"环境的骨架。地形决定视线走向、路径与掩体，先定地形再放建筑。" },
+{ id:"WD-01-1", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 平原与草原", zh:"平原与草原", en:"Plains", slot:"content",
+  kw:["grassland","open plain","prairie horizon"], alt:["草原"], desc:"地平线裸露，视线开阔，适合表现孤身感。" },
+{ id:"WD-01-2", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 山地与峡谷", zh:"山地与峡谷", en:"Mountains", slot:"content",
+  kw:["mountain range","canyon","rocky cliffs"], alt:["山"], desc:"垂直落差大，形成天然遮挡与轮廓背景。" },
+{ id:"WD-01-3", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 森林与丛林", zh:"森林与丛林", en:"Forest", slot:"content",
+  kw:["forest","dense jungle","ancient woods"], alt:["树林"], desc:"垂直层次多，光线被切割成柱状。" },
+{ id:"WD-01-4", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 沙漠与荒原", zh:"沙漠与荒原", en:"Desert", slot:"content",
+  kw:["desert dunes","barren waste","sand sea"], alt:["荒漠"], desc:"形状以长弧线为主，缺乏垂直参照物。" },
+{ id:"WD-01-5", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 水域与海岸", zh:"水域与海岸", en:"Water and Coast", slot:"content",
+  kw:["coastline","lake shore","river bank"], alt:["海边"],
+  desc:"水平面提供镜面与倒影，天然制造上下对称构图。" },
+{ id:"WD-01-6", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 极地与冰川", zh:"极地与冰川", en:"Polar", slot:"content",
+  kw:["glacier","snow field","ice shelf"], alt:["雪原"],
+  desc:"高反光低彩度，蓝色阴影主导，需要保留雪面的体积。" },
+{ id:"WD-01-7", lib:"06", up:"WD-01", path:"世界与资产 › 地形自然 › 天空与云层", zh:"天空与云层", en:"Sky", slot:"content",
+  kw:["dramatic sky","cloud layer","cloud sea"], alt:["云"],
+  desc:"占据大面积却常被忽略。云的形状是气氛的直接开关。" },
+
+// ── WD-02 气候与大气 ──────────────────────────────────
+{ id:"WD-02", lib:"06", up:null, path:"世界与资产 › 气候大气", zh:"气候大气", en:"Weather", alt:["天气"],
+  desc:"天气同时改变光照、能见度与人物行为，是性价比最高的氛围变量。" },
+{ id:"WD-02-1", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 晴与强日照", zh:"晴与强日照", en:"Clear Sunlight", slot:"style",
+  kw:["clear weather","strong sunlight","harsh noon light"], alt:["晴天"], desc:"对比强烈，阴影边界清晰。" },
+{ id:"WD-02-2", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 阴与漫射光", zh:"阴与漫射光", en:"Overcast", slot:"style",
+  kw:["overcast","diffused light","soft flat lighting"], alt:["阴天"], desc:"无方向光，彩度下降，轮廓柔和。" },
+{ id:"WD-02-3", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 雨", zh:"雨", en:"Rain", slot:"style",
+  kw:["rain","wet ground reflections","rain streaks"], alt:["雨天"], desc:"地面反光增强，边缘出现线性雨迹。" },
+{ id:"WD-02-4", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 雪", zh:"雪", en:"Snow", slot:"style",
+  kw:["snowfall","snow accumulation","cold blue tone"], alt:["雪天"], desc:"空气中悬浮颗粒多，远景对比度下降。" },
+{ id:"WD-02-5", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 雾与霞", zh:"雾与霞", en:"Fog and Mist", slot:"style",
+  kw:["fog","low mist","volumetric haze"], alt:["薄雾"],
+  desc:"用空气层做景深，是最省力的空间分层手段。" },
+{ id:"WD-02-6", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 风", zh:"风", en:"Wind", slot:"style",
+  kw:["wind","blowing leaves","flying debris"], alt:["大风"],
+  desc:"风本身不可见，靠衣物、头发、尘土与植被位移表达。" },
+{ id:"WD-02-7", lib:"06", up:"WD-02", path:"世界与资产 › 气候大气 › 极端天象", zh:"极端天象", en:"Extreme Weather", slot:"style",
+  kw:["storm","lightning","dust storm"], alt:["暴风雨"], desc:"灾害级天气，人与环境的比例被压缩。" },
+
+// ── WD-03 时间与光照时区 ──────────────────────────────
+{ id:"WD-03", lib:"06", up:null, path:"世界与资产 › 时间光照", zh:"时间光照", en:"Time of Day", alt:["时段"],
+  desc:"同一场景换个时段就是新画面。先选时段再细化布光。" },
+{ id:"WD-03-1", lib:"06", up:"WD-03", path:"世界与资产 › 时间光照 › 清晨", zh:"清晨", en:"Dawn", slot:"style",
+  kw:["dawn light","early morning","cool warm mix"], alt:["黎明"], desc:"低角度光，冷暖交界明显，常有地面雾。" },
+{ id:"WD-03-2", lib:"06", up:"WD-03", path:"世界与资产 › 时间光照 › 正午", zh:"正午", en:"Midday", slot:"style",
+  kw:["midday sun","top light","short shadows"], alt:["白天"], desc:"顶光，阴影短且贴近物体。" },
+{ id:"WD-03-3", lib:"06", up:"WD-03", path:"世界与资产 › 时间光照 › 黄昏", zh:"黄昏", en:"Golden Hour", slot:"style",
+  kw:["golden hour","sunset backlight","long shadows"], alt:["夕阳"],
+  desc:"长影、强侧逆光，橙紫对比，最易出情绪。" },
+{ id:"WD-03-4", lib:"06", up:"WD-03", path:"世界与资产 › 时间光照 › 夜晚", zh:"夜晚", en:"Night", slot:"style",
+  kw:["night scene","moonlight","night ambience"], alt:["夜景"], desc:"大面积暗部，亮点集中，需明确光源。" },
+{ id:"WD-03-5", lib:"06", up:"WD-03", path:"世界与资产 › 时间光照 › 人造光源环境", zh:"人造光源环境", en:"Artificial Light", slot:"style",
+  kw:["neon lights","fluorescent interior","candlelight"], alt:["灯光"],
+  desc:"霓虹、灯管、烛火。光源本身应入画，给出颜色动机。" },
+{ id:"WD-03-6", lib:"06", up:"WD-03", path:"世界与资产 › 时间光照 › 季节变化", zh:"季节变化", en:"Season", slot:"content",
+  kw:["seasonal change","autumn leaves","winter bare trees"], alt:["四季"],
+  desc:"植被颜色、覆盖物与服装厚度三件事同时切换。" },
+
+// ── WD-04 建筑与聚落 ──────────────────────────────────
+{ id:"WD-04", lib:"06", up:null, path:"世界与资产 › 建筑聚落", zh:"建筑聚落", en:"Architecture", alt:["建筑"],
+  desc:"建筑是凝固的历史。选材、结构与组合方式都在交代年代与地域。" },
+{ id:"WD-04-1", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 东亚传统建筑", zh:"东亚传统建筑", en:"East Asian Traditional", slot:"content",
+  kw:["east asian architecture","tiled roof","wooden lattice"], alt:["古建"],
+  desc:"木构、瓦顶、出檐深远。注意区分地域变体，不混写成单一符号。" },
+{ id:"WD-04-2", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 欧洲古典与石砌", zh:"欧洲古典与石砌", en:"European Classical", slot:"content",
+  kw:["stone architecture","classical columns","gothic arches"], alt:["欧式"], desc:"承重墙体系，厚墙小窗，装饰集中在立面。" },
+{ id:"WD-04-3", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 伊斯兰与穹顶体系", zh:"伊斯兰与穹顶体系", en:"Islamic Architecture", slot:"content",
+  kw:["islamic architecture","dome and minaret","geometric tilework"], alt:["清真寺"],
+  desc:"⚠ 宗教建筑请作为「建筑风格」引用，避免涉及礼拜场景的虚构再演绎。" },
+{ id:"WD-04-4", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 热带与干栏民居", zh:"热带与干栏民居", en:"Vernacular Tropical", slot:"content",
+  kw:["stilt house","thatch roof","vernacular dwelling"], alt:["民居"], desc:"就地取材，架空防潮，通风优先。" },
+{ id:"WD-04-5", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 现代都市", zh:"现代都市", en:"Modern City", slot:"content",
+  kw:["modern city","glass skyscrapers","urban density"], alt:["城市"], desc:"幕墙、重复窗格、垂直尺度压制个体。" },
+{ id:"WD-04-6", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 工业与码头厂区", zh:"工业与码头厂区", en:"Industrial", slot:"content",
+  kw:["industrial complex","shipyard","factory pipes"], alt:["工厂"], desc:"管道、储罐、桁架，功能结构全部外露。" },
+{ id:"WD-04-7", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 废墟与废弃地", zh:"废墟与废弃地", en:"Ruins", slot:"content",
+  kw:["ruins","abandoned place","overgrown ruins"], alt:["遗迹"],
+  desc:"建筑被自然回收，破口与植被覆盖是主要语言。" },
+{ id:"WD-04-8", lib:"06", up:"WD-04", path:"世界与资产 › 建筑聚落 › 未来与科幻营造", zh:"未来与科幻营造", en:"Futuristic Structure", slot:"content",
+  kw:["futuristic structure","sci fi city","orbital habitat"], alt:["科幻"],
+  desc:"以结构逻辑自洽为前提夸张体量，避免只有发光线条。" }
+];
+
+if (typeof module !== "undefined" && module.exports) module.exports = { LIB_WORLD };

@@ -1,0 +1,8 @@
+# 本地会话与产物
+.workbuddy/
+forge-out/
+*.tmp
+.tmp-*
+Thumbs.db
+.DS_Store
+desktop.ini
