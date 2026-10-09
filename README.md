@@ -37,7 +37,7 @@
 <!-- GALLERY-EMBED:START -->
 ## 示例画廊 · 提示词与成品对照
 
-共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **14 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 36 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
+共 **50 条**，全部为 R0 条目（本库授权分级中的最低档：未命中在世创作者姓名、工作室名、品牌或作品名，按 `assets/rights.js` 的内部规则判定可自由配图。这是内部分级判定，不构成法律意见——商用前请自行复核）。其中 **15 张已配图**，每张由该条目的 **GPT 正文**直接生成——复制折叠区里的提示词，喂给任意出图模型就能得到同风格的结果；另有 35 条**提示词已就绪、待配图**（见下方清单）。可交互的完整画廊在 `index.html`。
 
 <table>
 <tr>
@@ -292,13 +292,32 @@ Retro 1970s super-robot anime still: a chunky chest-heavy robot with a horned he
 
 </td>
 </tr>
+<tr>
+<td valign="top" width="50%">
+
+<img src="examples/A2-02.png" width="430" alt="A2-02" />
+
+**A2-02 · 80 年代黄金赛璐璐**（80s Golden Age Cel）
+
+看点：看点：水粉厚涂的黄昏城市背景有真实空气纵深，夕阳海面与云层是多层色叠出来的；角色则是干净的两层色赛璐璐，阴影块锐利——「手绘背景 × 赛璐璐角色」的叠合一眼可辨，整图暖橙对深蓝的黄金年代配色。
+
+<details><summary>📋 完整提示词（GPT 正文，复制即用）</summary>
+
+```text
+Golden-age 1980s anime cel animation still: a young heroine leaning on a balcony railing at sunset above a seaside town. Recreate the peak hand-painted look with dense opaque poster-color background art carrying genuine atmospheric depth, characters laid over it in crisp clean line art with two-tone shading, and rich saturated primaries rather than modern pastel keying. Include the analog qualities of an actual film capture, photographic cel grain, slight color registration drift where the camera ran hot, and gentle specular bloom off polished railings and hair. Compose it like a theatrical key visual with unhurried depth. Include no text, logos, watermarks or modern digital effects.
+```
+
+</details>
+
+</td>
+<td></td>
+</tr>
 </table>
 
-<details><summary>📝 已登记提示词、待配图的条目（36 条）</summary>
+<details><summary>📝 已登记提示词、待配图的条目（35 条）</summary>
 
 | 条目 | 名称 | 验证点（配图时必须演示） |
 | --- | --- | --- |
-| A2-02 | 80 年代黄金赛璐璐 | 水粉厚涂背景有真实空气纵深，角色是强对比赛璐璐两层色，整图带胶片颗粒——手绘背景与赛璐璐角色的叠合。 |
 | A2-04 | 00 年代过渡期数码 | 人物仍是赛璐璐分层，但出现泛光与三维辅助背景/机甲，饱和度偏高——手绘与数码混血的过渡特征。 |
 | A2-05 | 10 年代高清电视动画 | 线条极锐利、明度高，阴影分两层而不是一层——「看起来像新番」的制式感。 |
 | A2-07 | 录像带 VHS 噪波 | 磁迹失真、色度溢出、扫描线、底部噪声带——介质损伤是画面语言，不是滤镜贴纸。 |

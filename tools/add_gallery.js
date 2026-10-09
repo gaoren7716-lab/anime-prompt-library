@@ -111,6 +111,7 @@ console.log("✓ examples.js 已更新（img + 看点）");
 execSync("node \"" + path.join(ROOT, "tools", "embed_gallery.js") + "\"", { stdio: "inherit" });
 
 /* ---------- 收尾提示 ---------- */
-console.log("\\n下一步（人工确认后执行）：");
+console.log(" ");
+console.log("下一步（人工确认后执行）：");
 console.log("  git add -A && git commit -m \"gallery: " + id + " 配图\" && git push");
 console.log("  提交前建议跑: node tools/check_rights.js && node tools/check_ids.js");
